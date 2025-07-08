@@ -44,6 +44,8 @@ const Scene = () => {
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(scW, scH)
     renderer.outputEncoding = THREE.sRGBEncoding
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
     container.appendChild(renderer.domElement)
     refRenderer.current = renderer
 
@@ -68,23 +70,38 @@ const Scene = () => {
     camera.position.copy(initialCameraPosition)
     camera.lookAt(target)
 
-    const ambientLight = new THREE.AmbientLight(0xffe0aa, 3.5)
+    const ambientLight = new THREE.AmbientLight(0xffe0aa, 3.0)
     scene.add(ambientLight)
-
-    // const spotLight = new THREE.SpotLight(0x64c7ff, 4)
-    // spotLight.position.set(10, 20, 10)
-    // spotLight.angle = Math.PI / 6
-    // spotLight.penumbra = 0.2
-    // spotLight.castShadow = true
-    // scene.add(spotLight)
+    
+    const spotLight1 = new THREE.SpotLight(0xffaa33, 700)
+    spotLight1.position.set(8, 20, 8)
+    spotLight1.angle = Math.PI / 4
+    spotLight1.penumbra = 0.3
+    spotLight1.castShadow = true
+    spotLight1.shadow.mapSize.width = 2048
+    spotLight1.shadow.mapSize.height = 2048
+    spotLight1.shadow.camera.near = 0.5
+    spotLight1.shadow.camera.far = 500
+    scene.add(spotLight1)
+    
+    const spotLight2 = new THREE.SpotLight(0x9933ff, 800)
+    spotLight2.position.set(-6, 16, -5)
+    spotLight2.angle = Math.PI / 3.5
+    spotLight2.penumbra = 0.4
+    spotLight2.castShadow = true
+    spotLight2.shadow.mapSize.width = 1024
+    spotLight2.shadow.mapSize.height = 1024
+    spotLight2.shadow.camera.near = 0.5
+    spotLight2.shadow.camera.far = 500
+    scene.add(spotLight2)
 
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.autoRotate = true
     controls.target = target
 
     loadGLTFModel(scene, scenePath, {
-      receiveShadow: false,
-      castShadow: false,
+      receiveShadow: true,
+      castShadow: true,
     }).then(() => {
       animate()
       setLoading(false)
