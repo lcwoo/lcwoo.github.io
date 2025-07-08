@@ -17,7 +17,7 @@ const Scene = () => {
   const router = useRouter()
 
   useEffect(() => {
-    setScenePath(`${router.basePath}/sponge_opti.glb`)
+    setScenePath(`${router.basePath}/sponge-webp.glb`)
   }, [router.basePath])
 
   const handleWindowResize = useCallback(() => {
