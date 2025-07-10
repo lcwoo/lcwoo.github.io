@@ -77,22 +77,22 @@ const Scene = () => {
     spotLight1.position.set(8, 20, 8)
     spotLight1.angle = Math.PI / 4
     spotLight1.penumbra = 0.3
-    spotLight1.castShadow = true
-    spotLight1.shadow.mapSize.width = 2048
-    spotLight1.shadow.mapSize.height = 2048
-    spotLight1.shadow.camera.near = 0.5
-    spotLight1.shadow.camera.far = 500
+    // spotLight1.castShadow = true
+    // spotLight1.shadow.mapSize.width = 1024
+    // spotLight1.shadow.mapSize.height = 1024
+    // spotLight1.shadow.camera.near = 0.5
+    // spotLight1.shadow.camera.far = 500
     scene.add(spotLight1)
     
     const spotLight2 = new THREE.SpotLight(0x9933ff, 800)
     spotLight2.position.set(-6, 16, -5)
     spotLight2.angle = Math.PI / 3.5
     spotLight2.penumbra = 0.4
-    spotLight2.castShadow = true
-    spotLight2.shadow.mapSize.width = 1024
-    spotLight2.shadow.mapSize.height = 1024
-    spotLight2.shadow.camera.near = 0.5
-    spotLight2.shadow.camera.far = 500
+    // spotLight2.castShadow = false
+    // spotLight2.shadow.mapSize.width = 1024
+    // spotLight2.shadow.mapSize.height = 1024
+    // spotLight2.shadow.camera.near = 0.5
+    // spotLight2.shadow.camera.far = 500
     scene.add(spotLight2)
 
     const controls = new OrbitControls(camera, renderer.domElement)
