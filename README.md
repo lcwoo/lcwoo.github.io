@@ -10,8 +10,8 @@
 
 ### ✨ Features
 
-- **🎮 Interactive 3D Scene** - Animated sponge model with Three.js
-- **🌓 Dark/Light Mode** - Automatic theme switching with smooth transitions
+- **Interactive 3D Scene** - Animated sponge model with Three.js
+- **Dark/Light Mode** - Automatic theme switching with smooth transitions
 - **Fully Responsive** - Perfect experience on all devices
 - **Smooth Animations** - Beautiful page transitions with Framer Motion
 - **Auto-Rotation** - Interactive camera controls with orbit functionality
@@ -30,7 +30,7 @@
 
 ### 🚀 Getting Started
 #### 💻 Installation
-```
+```bash
 # 1. Clone the repository
 git clone https://github.com/lcwoo/homepage.git
 cd homepage
@@ -46,7 +46,7 @@ npm run dev
 
 ### 📦 Required Dependencies
 
-```
+```bash
 # Core dependencies
 npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion next react react-dom
 
@@ -59,7 +59,7 @@ npm i -D eslint eslint-next prettier
 
 ## Project structure
 
-```
+```bash
 📂 homepage/
 ├── pages/               # Next.js pages (routes)
 │   ├── index.js         # 🏠 Homepage with 3D scene and profile
@@ -91,7 +91,7 @@ npm i -D eslint eslint-next prettier
 ### 🛠 Customization Guide
 - #### 👤 Personal Info (pages/index.js)
 
-```
+```javascript
 // Profile Section
 <Heading as="h2" variant="page-title">
   Your Name
@@ -130,7 +130,7 @@ const config = {
 1. Add your GLB/GLTF file to public/ directory
 2. Update the model path in pages/index.js:
 
-```
+```javascript
 useEffect(() => {
   setScenePath(`${router.basePath}/your-model.glb`)
 }, [router.basePath])
@@ -141,7 +141,7 @@ useEffect(() => {
 - #### 🎯 Scene Configuration
 Customize the 3D scene settings:
 
-```
+```javascript
 // Camera positioning
 const initialCameraPosition = new THREE.Vector3(
   20 * Math.sin(0.2 * Math.PI),
@@ -160,7 +160,7 @@ spotLight1.position.set(8, 20, 8)                     // Position
 - #### ➕ Adding New Sections
 
 Create new sections using the Section component:
-```
+```javascript
 import Section from '../components/section'
 
 <Section delay={0.3}>
