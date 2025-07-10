@@ -88,7 +88,7 @@ const Navbar = props => {
           </LinkItem>
           <LinkItem
             target="_blank"
-            href="https://github.com/lcwoo/nextjs-threejs-portfolio"
+            href="https://github.com/lcwoo/homepage"
             path={path}
             display="inline-flex"
             alignItems="center"
@@ -124,7 +124,7 @@ const Navbar = props => {
 
                 <MenuItem
                   as={Link}
-                  href="https://github.com/lcwoo/nextjs-threejs-portfolio?tab=readme-ov-file"
+                  href="https://github.com/lcwoo/homepage?tab=readme-ov-file"
                 >
                   View Source
                 </MenuItem>

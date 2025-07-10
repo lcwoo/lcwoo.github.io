@@ -7,7 +7,7 @@ module.exports = {
   images: {
     unoptimized: true
   },
-  basePath: isProd ? '/nextjs-threejs-portfolio' : '',
-  assetPrefix: isProd ? '/nextjs-threejs-portfolio/' : '',
+  basePath: isProd ? '/homepage' : '',
+  assetPrefix: isProd ? '/homepage/' : '',
   trailingSlash: true,
 };

@@ -1,6 +1,6 @@
 # 🌐 Personal Hompage
 
-[🔗 Visit Live Site](https://lcwoo.github.io/nextjs-threejs-portfolio/)
+[🔗 Visit Live Site](https://lcwoo.github.io/homepage/)
 
 <div align="center">
 
@@ -32,8 +32,8 @@
 #### 💻 Installation
 ```bash
 # 1. Clone the repository
-git clone https://github.com/lcwoo/nextjs-threejs-portfolio.git
-cd nextjs-threejs-portfolio
+git clone https://github.com/lcwoo/homepage.git
+cd homepage
 
 # 2. Install dependencies
 npm install
@@ -60,7 +60,7 @@ npm i -D eslint eslint-next prettier
 ## Project structure
 
 ```bash
-📂 nextjs-threejs-portfolio/
+📂 homepage/
 ├── pages/               # Next.js pages (routes)
 │   ├── index.js         # 🏠 Homepage with 3D scene and profile
 │   ├── publications.js  # 📚 Publications
@@ -184,7 +184,7 @@ import Section from '../components/section'
 
 You can create your own homepage for free without notifying me by forking this project under the following conditions:
 
-- Add a link to [my homepage](https://lcwoo.github.io/nextjs-threejs-portfolio/), and [Takuya's wensite](https://www.craftz.dog/)
+- Add a link to [my homepage](https://lcwoo.github.io/homepage/), and [Takuya's wensite](https://www.craftz.dog/)
 - Do not use the 3d model
 
 Check out [LICENSE](./LICENSE) for more detail.
