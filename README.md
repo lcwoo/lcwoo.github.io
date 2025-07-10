@@ -1,6 +1,6 @@
 # 🌐 Personal Hompage
 
-[🔗 Visit Live Site](https://lcwoo.github.io/homepage/)
+[🔗 Visit Live Site](https://lcwoo.github.io/nextjs-threejs-portfolio/)
 
 <div align="center">
 
