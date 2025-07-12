@@ -73,16 +73,16 @@ const Scene = () => {
     const ambientLight = new THREE.AmbientLight(0xffe0aa, 3.0)
     scene.add(ambientLight)
     
-    const spotLight1 = new THREE.SpotLight(0xffaa33, 700)
-    spotLight1.position.set(8, 20, 8)
-    spotLight1.angle = Math.PI / 4
-    spotLight1.penumbra = 0.3
-    // spotLight1.castShadow = true
-    // spotLight1.shadow.mapSize.width = 1024
-    // spotLight1.shadow.mapSize.height = 1024
-    // spotLight1.shadow.camera.near = 0.5
-    // spotLight1.shadow.camera.far = 500
-    scene.add(spotLight1)
+    // const spotLight1 = new THREE.SpotLight(0xffaa33, 700)
+    // spotLight1.position.set(8, 20, 8)
+    // spotLight1.angle = Math.PI / 4
+    // spotLight1.penumbra = 0.3
+    // // spotLight1.castShadow = true
+    // // spotLight1.shadow.mapSize.width = 1024
+    // // spotLight1.shadow.mapSize.height = 1024
+    // // spotLight1.shadow.camera.near = 0.5
+    // // spotLight1.shadow.camera.far = 500
+    // scene.add(spotLight1)
     
     const spotLight2 = new THREE.SpotLight(0x9933ff, 800)
     spotLight2.position.set(-6, 16, -5)

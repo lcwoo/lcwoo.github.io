@@ -1,4 +1,4 @@
-# 🌐 Personal Hompage
+# 🌐 Personal Homepage
 
 [🔗 Visit Live Site](https://lcwoo.github.io/homepage/)
 
@@ -10,26 +10,43 @@
 
 ### ✨ Features
 
-- **Interactive 3D Scene** - Animated sponge model with Three.js
-- **Dark/Light Mode** - Automatic theme switching with smooth transitions
-- **Fully Responsive** - Perfect experience on all devices
-- **Smooth Animations** - Beautiful page transitions with Framer Motion
-- **Auto-Rotation** - Interactive camera controls with orbit functionality
-- **Dynamic Lighting** - Customizable spot lights for enhanced visuals
+- **Interactive 3D Scene** – Animated sponge model with Three.js  
+- **Dark/Light Mode** – Automatic theme switching with smooth transitions  
+- **Fully Responsive** – Works on all screen sizes  
+- **Smooth Animations** – Page transitions using Framer Motion  
+- **Auto-Rotation** – Interactive camera controls with orbit functionality  
+- **Dynamic Lighting** – Customizable spot lights for enhanced visuals  
 
 ---
 
-### 🧰 Tech Stack
+## 📖 Table of Contents
 
-- [Next.js](https://nextjs.org/) - A React framework with hybrid static & server rendering, and route pre-fetching, etc.
-- [Chakra UI](https://chakra-ui.com/) - A simple, modular and accessible component library for React
-- [Three.js](https://threejs.org/) - 3D library for JavaScript
-- [Framer Motion](https://www.framer.com/motion/) - An animation library for React
+- [🌐 Personal Homepage](#-personal-homepage)
+    - [✨ Features](#-features)
+  - [📖 Table of Contents](#-table-of-contents)
+  - [🧰 Tech Stack](#-tech-stack)
+  - [🚀 Getting Started](#-getting-started)
+    - [Installation](#installation)
+  - [📦 Required Dependencies](#-required-dependencies)
+  - [Project structure](#project-structure)
+  - [🛠 Customization Guide](#-customization-guide)
+  - [🔧 Development](#-development)
+  - [📄 License \& Usage](#-license--usage)
+  - [🙏 Acknowledgement](#-acknowledgement)
 
 ---
 
-### 🚀 Getting Started
-#### 💻 Installation
+## 🧰 Tech Stack
+
+- [Next.js](https://nextjs.org/) – React framework with SSR and static generation  
+- [Chakra UI](https://chakra-ui.com/) – Modular and accessible component library  
+- [Three.js](https://threejs.org/) – 3D rendering library for JavaScript  
+- [Framer Motion](https://www.framer.com/motion/) – Animation library for React  
+
+---
+
+## 🚀 Getting Started
+###  Installation
 ```bash
 # 1. Clone the repository
 git clone https://github.com/lcwoo/homepage.git
@@ -38,13 +55,13 @@ cd homepage
 # 2. Install dependencies
 npm install
 
-# 3️. Start development server
+# 3. Start development server
 npm run dev
 ```
 
 > *Open http://localhost:3000 to view your homepage!*
 
-### 📦 Required Dependencies
+## 📦 Required Dependencies
 
 ```bash
 # Core dependencies
@@ -88,8 +105,9 @@ npm i -D eslint eslint-next prettier
 
 ---
 
-### 🛠 Customization Guide
-- #### 👤 Personal Info (pages/index.js)
+## 🛠 Customization Guide
+
+- ### 👤 Personal Info (pages/index.js)
 
 ```javascript
 // Profile Section
@@ -111,9 +129,9 @@ npm i -D eslint eslint-next prettier
 </Link>
 ```
 
-- #### 🎨 Theme Settings (lib/theme.js)
+- ### 🎨 Theme Settings (lib/theme.js)
 
-```
+```javascript
 const colors = {
   grassTeal: '#88ccca',    // Custom brand color
   // Add your custom colors
@@ -125,7 +143,7 @@ const config = {
 }
 ```
 
-- #### 🧩 Replace 3D Model
+- ### 🧩 Replace 3D Model
 
 1. Add your GLB/GLTF file to public/ directory
 2. Update the model path in pages/index.js:
@@ -136,9 +154,7 @@ useEffect(() => {
 }, [router.basePath])
 ```
 
-3. Adjust lighting and camera in the scene component as needed
-
-- #### 🎯 Scene Configuration
+- ### 📸 Adjust Camera and Lighting
 Customize the 3D scene settings:
 
 ```javascript
@@ -181,19 +197,24 @@ import Section from '../components/section'
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License"/>
 </div>
 
+You can create your own homepage for free by forking this project under the following conditions:
 
-You can create your own homepage for free without notifying me by forking this project under the following conditions:
+- Do **not** use the original 3D voxel dog model from [craftz.dog](https://www.craftz.dog/). It is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) and cannot be reused or modified.
+- You must provide attribution by adding a link to [Takuya Matsuyama's homepage](https://www.craftz.dog/).
 
-- Add a link to [my homepage](https://lcwoo.github.io/homepage/), and [Takuya's wensite](https://www.craftz.dog/)
-- Do not use the 3d model
+>  🧽 Note: The 3D SpongeBob model in this project is an original creation by lcwoo and can be used freely without restrictions.
 
-Check out [LICENSE](./LICENSE) for more detail.
+Check out [LICENSE](./LICENSE) for more details.
 
 ---
 
 ## 🙏 Acknowledgement
 
+This website is based on [Takuya's website](https://www.craftz.dog/). Special thanks to the open-source community and amazing tools like Chakra UI, Framer Motion, and Three.js.
+<div align="center">
+  
+Made with ❤️ by lcwoo
 
-This website is built based on the [Takuya's website](https://www.craftz.dog/). Highly appreciate his great work! 🎉 Special thanks to the open-source community for the amazing tools and libraries!
+If you found this helpful, please ⭐ the repository!
 
-<div align="center"> Made with ❤️ by lcwoo If you found this helpful, please ⭐ the repository! </div>
+</div>
