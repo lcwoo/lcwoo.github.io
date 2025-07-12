@@ -8,7 +8,7 @@
 
 </div>
 
-### ✨ Features
+## ✨ Features
 
 - **Interactive 3D Scene** – Animated sponge model with Three.js  
 - **Dark/Light Mode** – Automatic theme switching with smooth transitions  
@@ -22,14 +22,17 @@
 ## 📖 Table of Contents
 
 - [🌐 Personal Homepage](#-personal-homepage)
-    - [✨ Features](#-features)
+  - [✨ Features](#-features)
   - [📖 Table of Contents](#-table-of-contents)
   - [🧰 Tech Stack](#-tech-stack)
   - [🚀 Getting Started](#-getting-started)
-    - [Installation](#installation)
   - [📦 Required Dependencies](#-required-dependencies)
   - [Project structure](#project-structure)
   - [🛠 Customization Guide](#-customization-guide)
+    - [👤 Personal Info (pages/index.js)](#-personal-info-pagesindexjs)
+    - [🎨 Theme Settings (lib/theme.js)](#-theme-settings-libthemejs)
+    - [🧩 Replace 3D Model](#-replace-3d-model)
+    - [📸 Adjust Camera and Lighting](#-adjust-camera-and-lighting)
   - [🔧 Development](#-development)
   - [📄 License \& Usage](#-license--usage)
   - [🙏 Acknowledgement](#-acknowledgement)
@@ -46,7 +49,8 @@
 ---
 
 ## 🚀 Getting Started
-###  Installation
+
+- ###  Installation
 ```bash
 # 1. Clone the repository
 git clone https://github.com/lcwoo/homepage.git
@@ -107,7 +111,7 @@ npm i -D eslint eslint-next prettier
 
 ## 🛠 Customization Guide
 
-- ### 👤 Personal Info (pages/index.js)
+### 👤 Personal Info (pages/index.js)
 
 ```javascript
 // Profile Section
@@ -129,7 +133,7 @@ npm i -D eslint eslint-next prettier
 </Link>
 ```
 
-- ### 🎨 Theme Settings (lib/theme.js)
+### 🎨 Theme Settings (lib/theme.js)
 
 ```javascript
 const colors = {
@@ -143,7 +147,7 @@ const config = {
 }
 ```
 
-- ### 🧩 Replace 3D Model
+### 🧩 Replace 3D Model
 
 1. Add your GLB/GLTF file to public/ directory
 2. Update the model path in pages/index.js:
@@ -154,7 +158,7 @@ useEffect(() => {
 }, [router.basePath])
 ```
 
-- ### 📸 Adjust Camera and Lighting
+### 📸 Adjust Camera and Lighting
 Customize the 3D scene settings:
 
 ```javascript
