@@ -204,7 +204,7 @@ import Section from '../components/section'
 You can create your own homepage for free by forking this project under the following conditions:
 
 - Do **not** use the original 3D voxel dog model from [craftz.dog](https://www.craftz.dog/). It is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) and cannot be reused or modified.
-- You must provide attribution by adding a link to [Takuya Matsuyama's homepage](https://www.craftz.dog/).
+- You must provide attribution by adding a link to [My homepage](https://github.com/lcwoo/homepage) and [Takuya Matsuyama's homepage](https://www.craftz.dog/).
 
 >  🧽 Note: The 3D SpongeBob model in this project is an original creation by lcwoo and can be used freely without restrictions.
 
