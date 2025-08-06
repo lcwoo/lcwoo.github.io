@@ -137,7 +137,10 @@ const Home = () => {
         </Heading>
         <BioSection>
           <BioYear>2025</BioYear>
-          Graduated in Feb 2025 from Automotive Engineering, Hanyang University.
+          <Box pl={4}>
+            <Text mb={1}>Graduated in Feb 2025 from Automotive Engineering, Hanyang University.</Text>
+            <Text>Started internship at Tommoro Robotics in June 2025.</Text>
+          </Box>
         </BioSection>
       </Section>
       <Section delay={0.3}>
