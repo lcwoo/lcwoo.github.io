@@ -10,7 +10,8 @@ import {
   List,
   ListItem,
   useColorModeValue,
-  Collapse
+  Collapse,
+  Text
 } from '@chakra-ui/react'
 import { ChevronRightIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import Paragraph from '../components/paragraph'
@@ -138,8 +139,12 @@ const Home = () => {
         <BioSection>
           <BioYear>2025</BioYear>
           <Box pl={4}>
-            <Text mb={1}>Graduated in Feb 2025 from Automotive Engineering, Hanyang University.</Text>
-            <Text>Started internship at Tommoro Robotics in June 2025.</Text>
+            <Text mb={1}>
+              Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
+            </Text>
+            <Text>
+              Currently working as an intern at Tomorrow Robotics since June 2025.
+            </Text>
           </Box>
         </BioSection>
       </Section>
