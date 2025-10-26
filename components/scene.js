@@ -44,8 +44,8 @@ const Scene = () => {
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(scW, scH)
     renderer.outputEncoding = THREE.sRGBEncoding
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    // 그림자 완전히 비활성화 - 성능 개선
+    renderer.shadowMap.enabled = false
     container.appendChild(renderer.domElement)
     refRenderer.current = renderer
 
@@ -70,38 +70,26 @@ const Scene = () => {
     camera.position.copy(initialCameraPosition)
     camera.lookAt(target)
 
-    const ambientLight = new THREE.AmbientLight(0xffe0aa, 3.0)
+    // 간단하고 가벼운 조명 설정 - 원래 색상 유지
+    const ambientLight = new THREE.AmbientLight(0xffe0aa, 2.5)
     scene.add(ambientLight)
     
-    // const spotLight1 = new THREE.SpotLight(0xffaa33, 700)
-    // spotLight1.position.set(8, 20, 8)
-    // spotLight1.angle = Math.PI / 4
-    // spotLight1.penumbra = 0.3
-    // // spotLight1.castShadow = true
-    // // spotLight1.shadow.mapSize.width = 1024
-    // // spotLight1.shadow.mapSize.height = 1024
-    // // spotLight1.shadow.camera.near = 0.5
-    // // spotLight1.shadow.camera.far = 500
-    // scene.add(spotLight1)
+    // DirectionalLight - SpotLight보다 훨씬 가벼움
+    const directionalLight1 = new THREE.DirectionalLight(0xffaa33, 0.6)
+    directionalLight1.position.set(8, 20, 8)
+    scene.add(directionalLight1)
     
-    const spotLight2 = new THREE.SpotLight(0x9933ff, 800)
-    spotLight2.position.set(-6, 16, -5)
-    spotLight2.angle = Math.PI / 3.5
-    spotLight2.penumbra = 0.4
-    // spotLight2.castShadow = false
-    // spotLight2.shadow.mapSize.width = 1024
-    // spotLight2.shadow.mapSize.height = 1024
-    // spotLight2.shadow.camera.near = 0.5
-    // spotLight2.shadow.camera.far = 500
-    scene.add(spotLight2)
+    const directionalLight2 = new THREE.DirectionalLight(0x9933ff, 2)
+    directionalLight2.position.set(-6, 16, -5)
+    scene.add(directionalLight2)
 
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.autoRotate = true
     controls.target = target
 
     loadGLTFModel(scene, scenePath, {
-      receiveShadow: true,
-      castShadow: true,
+      receiveShadow: false,  // 그림자 비활성화
+      castShadow: false,     // 그림자 비활성화
     }).then(() => {
       animate()
       setLoading(false)
