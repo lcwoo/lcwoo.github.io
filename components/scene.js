@@ -70,14 +70,14 @@ const Scene = () => {
     camera.position.copy(initialCameraPosition)
     camera.lookAt(target)
 
-    const ambientLight = new THREE.AmbientLight(0xffe0aa, 2.5)
+    const ambientLight = new THREE.AmbientLight(0xffe0aa, 1.2)
     scene.add(ambientLight)
     
-    const directionalLight1 = new THREE.DirectionalLight(0xffaa33, 0.6)
+    const directionalLight1 = new THREE.DirectionalLight(0xffaa33, 1)
     directionalLight1.position.set(8, 20, 8)
     scene.add(directionalLight1)
     
-    const directionalLight2 = new THREE.DirectionalLight(0x9933ff, 2)
+    const directionalLight2 = new THREE.DirectionalLight(0x9933ff, 3.5)
     directionalLight2.position.set(-6, 16, -5)
     scene.add(directionalLight2)
 
