@@ -70,11 +70,9 @@ const Scene = () => {
     camera.position.copy(initialCameraPosition)
     camera.lookAt(target)
 
-    // 간단하고 가벼운 조명 설정 - 원래 색상 유지
     const ambientLight = new THREE.AmbientLight(0xffe0aa, 2.5)
     scene.add(ambientLight)
     
-    // DirectionalLight - SpotLight보다 훨씬 가벼움
     const directionalLight1 = new THREE.DirectionalLight(0xffaa33, 0.6)
     directionalLight1.position.set(8, 20, 8)
     scene.add(directionalLight1)
@@ -88,8 +86,8 @@ const Scene = () => {
     controls.target = target
 
     loadGLTFModel(scene, scenePath, {
-      receiveShadow: false,  // 그림자 비활성화
-      castShadow: false,     // 그림자 비활성화
+      receiveShadow: false,
+      castShadow: false,
     }).then(() => {
       animate()
       setLoading(false)
