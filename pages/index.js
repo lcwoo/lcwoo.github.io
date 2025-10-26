@@ -54,7 +54,7 @@ const Home = () => {
             overflow="hidden"
           >
             <Image
-              src={`${basePath}/images/chungwoo.jpg`}
+              src={`/images/chungwoo.jpg`}
               alt="Profile image"
               width="150"
               height="150"

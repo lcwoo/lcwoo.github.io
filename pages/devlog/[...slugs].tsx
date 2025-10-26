@@ -54,7 +54,7 @@ const components = {
 
 
   img: (props: any) => {
-    const src = props.src?.startsWith('http') ? props.src : `${basePath}${props.src}`
+    const src = props.src?.startsWith('http') ? props.src : `${props.src}`
     return (
       <NextImage
         {...props}
@@ -66,7 +66,7 @@ const components = {
     )
   },
   Image: (props: any) => {
-    const src = props.src?.startsWith('http') ? props.src : `${basePath}${props.src}`
+    const src = props.src?.startsWith('http') ? props.src : `${props.src}`
     return (
       <NextImage
         {...props}
