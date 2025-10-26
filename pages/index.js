@@ -19,7 +19,7 @@ import { BioSection, BioYear } from '../components/bio'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import { GridItem } from '../components/grid-item'
-import { IoMailUnread, IoLogoInstagram, IoLogoGithub } from 'react-icons/io5'
+import { IoMailUnread, IoLogoLinkedin, IoLogoGithub } from 'react-icons/io5' // ✅ LinkedIn 아이콘으로 변경
 import Image from 'next/image'
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -200,15 +200,14 @@ const Home = () => {
               </Button>
             </Link>
           </ListItem>
-         
           <ListItem>
-            <Link href="https://www.instagram.com/_is_jw?igsh=MTFna2U2bGh5aHZr&utm_source=qr" target="_blank">
+            <Link href="https://www.linkedin.com/in/chungwoo-lee" target="_blank">
               <Button
                 variant="ghost"
                 colorScheme="teal"
-                leftIcon={<IoLogoInstagram />}
+                leftIcon={<IoLogoLinkedin />}
               >
-                @_is_jw
+                LinkedIn
               </Button>
             </Link>
           </ListItem>
