@@ -7,7 +7,7 @@ module.exports = {
   images: {
     unoptimized: true
   },
-  basePath: isProd ? '/homepage' : '',
-  assetPrefix: isProd ? '/homepage/' : '',
+  basePath: '',
+  assetPrefix: '',
   trailingSlash: true,
 };

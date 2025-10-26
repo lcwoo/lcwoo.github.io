@@ -83,9 +83,9 @@ const Home = () => {
           >
             Automotive Engineering from Hanyang University
           </Link>
-          . I am currently an intern at the{' '}
+          . I am currently a Research Assistant at the{' '}
           <Link
-            href="https://bi.snu.ac.kr/"
+            href="https://aiis.snu.ac.kr/"
             isExternal
             display="inline"
             textDecoration="none"
@@ -96,11 +96,11 @@ const Home = () => {
               color: 'teal.300',
             }}
           >
-            Biointelligence Lab at Seoul National University
+            Seoul National University AI Institute
           </Link>{' '}
-          under the supervision of{' '}
+          and a Research Intern at{' '}
           <Link
-            href="https://bi.snu.ac.kr/members/byoung-tak-zhang.html"
+            href="https://www.tomorrow-robotics.com/"
             isExternal
             display="inline"
             textDecoration="none"
@@ -111,7 +111,7 @@ const Home = () => {
               color: 'teal.300',
             }}
           >
-            Prof. Byoung-Tak Zhang
+            Tomorrow Robotics
           </Link>
           .
           <br />
@@ -142,8 +142,11 @@ const Home = () => {
             <Text mb={1}>
               Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
             </Text>
+            <Text mb={1}>
+              Started as a Research Assistant at Seoul National University AI Institute in June 2025.
+            </Text>
             <Text>
-              Currently working as an intern at Tomorrow Robotics since June 2025.
+              Currently working as a Research Intern at Tomorrow Robotics since June 2025.
             </Text>
           </Box>
         </BioSection>
@@ -233,13 +236,23 @@ const Home = () => {
       </Heading>
       
       <BioSection>
+        <BioYear>2025.06 – Present</BioYear>
+        Research Assistant, Seoul National University AI Institute
+      </BioSection>
+
+      <BioSection>
+        <BioYear>2025.06 – Present</BioYear>
+        Research Intern, Tomorrow Robotics
+      </BioSection>
+
+      <BioSection>
         <BioYear>2023.08 – 2024.10</BioYear>
         Undergraduate Researcher, Intelligent Robotics & Computer Vision Lab
       </BioSection>
 
       <BioSection>
-        <BioYear>2021.04 – 2022.01</BioYear>
-        Squad Leader, ROK Army, (Logistics Command)
+        <BioYear>2020.07 – 2022.01</BioYear>
+        Sergeant (Optical/Guard Equipment Maintenance), ROK Army Logistics Command
       </BioSection>
 
       <BioSection>
