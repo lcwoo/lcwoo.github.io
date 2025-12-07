@@ -47,7 +47,7 @@ const Home = () => {
                   var inner = container.firstElementChild;
                   if (inner && inner !== script) {
                     container.style.overflow = 'hidden';
-                    inner.style.marginTop = '-40px'; // 필요하면 -30 ~ -60 사이로 조절
+                    inner.style.marginTop = '-40px';
                     clearInterval(iv);
                   }
                   if (++tries > 20) clearInterval(iv);
