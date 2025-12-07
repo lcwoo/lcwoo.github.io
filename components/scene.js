@@ -43,7 +43,7 @@ const Scene = () => {
     })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(scW, scH)
-    renderer.outputEncoding = THREE.sRGBEncoding
+    renderer.outputColorSpace = THREE.SRGBColorSpace
     // 그림자 완전히 비활성화 - 성능 개선
     renderer.shadowMap.enabled = false
     container.appendChild(renderer.domElement)
@@ -58,7 +58,9 @@ const Scene = () => {
       20 * Math.cos(0.2 * Math.PI)
     )
 
-    const scale = scH * 0.007 + 4.8
+    // Use the smaller dimension to maintain aspect ratio
+    const minDimension = Math.min(scW, scH)
+    const scale = minDimension * 0.007 + 4.8
     const camera = new THREE.OrthographicCamera(
       -scale,
       scale,

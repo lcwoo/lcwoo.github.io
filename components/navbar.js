@@ -71,6 +71,7 @@ const LinkItem = ({ href, path, target, children, icon: Icon, ...props }) => {
 const Navbar = props => {
   const { path } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const hoverBg = useColorModeValue('gray.100', 'whiteAlpha.100')
 
   return (
     <>
@@ -86,7 +87,8 @@ const Navbar = props => {
         <Container
           display="flex"
           p={2}
-          maxW="container.xl"
+          maxW={{ base: '100%', md: 'container.xl' }}
+          px={{ base: 3, md: 6 }}
           wrap="wrap"
           align="center"
           justify="space-between"
@@ -136,24 +138,28 @@ const Navbar = props => {
       </Box>
 
       {/* Mobile Drawer */}
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent maxW={{ base: '85%', sm: '75%' }}>
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody>
             <VStack align="stretch" spacing={4} mt={4}>
               {menuItems.map(item => (
-                <LinkItem
-                  key={item.href}
-                  href={item.href}
-                  path={path}
-                  target={item.target}
-                  icon={item.icon}
-                  onClick={onClose}
-                >
-                  {item.label}
-                </LinkItem>
+                <Box key={item.href}>
+                  <LinkItem
+                    href={item.href}
+                    path={path}
+                    target={item.target}
+                    icon={item.icon}
+                    onClick={onClose}
+                    w="100%"
+                    borderRadius="md"
+                    _hover={{ bg: hoverBg }}
+                  >
+                    {item.label}
+                  </LinkItem>
+                </Box>
               ))}
             </VStack>
           </DrawerBody>

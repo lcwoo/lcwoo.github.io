@@ -17,11 +17,14 @@ export const SceneContainer = forwardRef(({ children }, ref) => (
     ref={ref}
     className="voxel-dog"
     m="auto"
-    mt={['-20px', '-60px', '-120px']}
-    mb={['-40px', '-140px', '-200px']}
-    w={[280, 480, 640]}
-    h={[280, 480, 640]}
+    mt={{ base: '-20px', md: '-60px', lg: '-120px' }}
+    mb={{ base: '-40px', md: '-140px', lg: '-200px' }}
+    w={{ base: '100%', sm: '320px', md: '480px', lg: '640px' }}
+    maxW="100%"
     position="relative"
+    sx={{
+      aspectRatio: '1 / 1',
+    }}
   >
     {children}
   </Box>

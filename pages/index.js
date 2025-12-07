@@ -9,7 +9,8 @@ import {
   List,
   ListItem,
   Collapse,
-  Text
+  Text,
+  Image as ChakraImage
 } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Paragraph from '../components/paragraph';
@@ -35,10 +36,15 @@ const Home = () => {
                 var container = document.getElementById('map-area');
                 if (!container) return;
 
+                // Calculate responsive width
+                var containerWidth = container.clientWidth || window.innerWidth;
+                var mapWidth = Math.min(containerWidth - 32, 800); // 32px for padding, max 800px
+                if (mapWidth < 300) mapWidth = containerWidth - 24; // Smaller padding on mobile
+
                 var script = document.createElement('script');
                 script.id = 'mapmyvisitors';
                 script.type = 'text/javascript';
-                script.src = 'https://mapmyvisitors.com/map.js?cl=ffffff&w=400&t=m&d=GKdDx4kekCJ52WV6ap4TUkdSn0-_t_CcGqV7t8V3m2E&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353';
+                script.src = 'https://mapmyvisitors.com/map.js?cl=ffffff&w=' + mapWidth + '&t=m&d=GKdDx4kekCJ52WV6ap4TUkdSn0-_t_CcGqV7t8V3m2E&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353';
                 script.async = true;
                 container.appendChild(script);
 
@@ -54,17 +60,39 @@ const Home = () => {
                 }, 500);
               }
 
+              function handleResize() {
+                var existingScript = document.getElementById('mapmyvisitors');
+                if (existingScript) {
+                  existingScript.remove();
+                  var container = document.getElementById('map-area');
+                  if (container) {
+                    container.innerHTML = '';
+                  }
+                }
+                initMapMyVisitors();
+              }
+
               if (document.readyState === 'complete' || document.readyState === 'interactive') {
                 initMapMyVisitors();
               } else {
                 document.addEventListener('DOMContentLoaded', initMapMyVisitors);
               }
+              
+              // Handle window resize
+              var resizeTimeout;
+              window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(handleResize, 300);
+              });
             })();
           `,
         }}
       />
 
-      <Container maxW="container.2xl">
+      <Container 
+        maxW={{ base: '100%', md: 'container.2xl' }}
+        px={{ base: 3, md: 6 }}
+      >
 
         <Box display={{ md: 'flex' }}>
           <Box flexGrow={1}>
@@ -83,17 +111,18 @@ const Home = () => {
               borderColor="whiteAlpha.800"
               borderWidth={2}
               borderStyle="solid"
-              w="150px"
-              h="150px"
+              w={{ base: '120px', md: '150px' }}
+              h={{ base: '120px', md: '150px' }}
               display="inline-block"
               borderRadius="full"
               overflow="hidden"
             >
-              <Image
-                src={`/images/chungwoo.jpg`}
+              <ChakraImage
+                src="/images/chungwoo.jpg"
                 alt="Profile image"
-                width="150"
-                height="150"
+                w="100%"
+                h="100%"
+                objectFit="cover"
               />
             </Box>
           </Box>
@@ -255,12 +284,12 @@ const Home = () => {
             Education
           </Heading>
           <BioSection>
-            <BioYear>2019</BioYear>
-            Boin High School
-          </BioSection>
-          <BioSection>
             <BioYear>2025</BioYear>
             B.S., Hanyang University, Dept. of Automotive Engineering
+          </BioSection>
+          <BioSection>
+            <BioYear>2019</BioYear>
+            Boin High School
           </BioSection>
         </Section>
 
@@ -297,17 +326,17 @@ const Home = () => {
 
         <Box align="center" h="5em" />
 
-        <Box align="center" my={10}>
+        <Box align="center" my={10} w="100%">
           <Box
             id="map-area"
             sx={{
               width: '100%',
-              maxW: '800px',
+              maxW: { base: '100%', md: '800px' },
               mx: 'auto',
+              minHeight: '300px',
             }}
           />
         </Box>
-
       </Container>
     </Layout>
   );

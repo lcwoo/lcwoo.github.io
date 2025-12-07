@@ -8,7 +8,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 const Scene = dynamic(() => import('../scene'), {
   ssr: false,
-  loading: () => <div>Loading 3D scene...</div>  // optional: 로딩 중 보여줄 UI
+  loading: () => <div>Loading 3D scene...</div>
 })
 
 const Main = ({ children, router }) => {
@@ -28,7 +28,11 @@ const Main = ({ children, router }) => {
 
       <NavBar path={router.asPath} />
 
-      <Container maxW="95ch" pt={14}>
+      <Container 
+        maxW={{ base: '100%', md: '95ch' }}
+        px={{ base: 3, md: 6 }}
+        pt={14}
+      >
         <Scene />
         <Box align="center" h="5em" />
         {children}
