@@ -99,7 +99,22 @@ const Home = () => {
             <Heading as="h2" variant="page-title">
               Lee Chung-woo
             </Heading>
-            <p>Prospective Graduate Student</p>
+            <p>
+              M.S. Student in the{' '}
+              <Link
+                href="https://gsai.snu.ac.kr/"
+                isExternal
+                display="inline"
+                textDecoration="none"
+                letterSpacing="normal"
+                fontWeight="normal"
+                color="inherit"
+                _hover={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                Interdisciplinary Program in Artificial Intelligence
+              </Link>
+              .
+            </p>
           </Box>
           <Box
             flexShrink={0}
@@ -133,7 +148,52 @@ const Home = () => {
             About me
           </Heading>
           <Paragraph>
-            Hello! I received a Bachelor's degree in{' '}
+            I am a Master’s student in the{' '}
+            <Link
+              href="https://gsai.snu.ac.kr/"
+              isExternal
+              display="inline"
+              textDecoration="none"
+              letterSpacing="normal"
+              fontWeight="normal"
+              _hover={{
+                textDecoration: 'underline',
+                color: 'teal.300',
+              }}
+            >
+              Interdisciplinary Program in Artificial Intelligence at Seoul National University
+            </Link>
+            , advised by{' '}
+            <Link
+              href="https://bi.snu.ac.kr/"
+              isExternal
+              display="inline"
+              textDecoration="none"
+              letterSpacing="normal"
+              fontWeight="normal"
+              _hover={{
+                textDecoration: 'underline',
+                color: 'teal.300',
+              }}
+            >
+              Prof. Byung-Tak Zhang
+            </Link>
+            , and a Research Intern at{' '}
+            <Link
+              href="https://tommoro.ai/"
+              isExternal
+              display="inline"
+              textDecoration="none"
+              letterSpacing="normal"
+              fontWeight="normal"
+              _hover={{
+                textDecoration: 'underline',
+                color: 'teal.300',
+              }}
+            >
+              Tommorro Robotics
+            </Link>
+            . I received my B.S. in{' '}
             <Link
               href="https://ae.hanyang.ac.kr/%ED%99%88"
               isExternal
@@ -148,41 +208,9 @@ const Home = () => {
             >
               Automotive Engineering from Hanyang University
             </Link>
-            . I am currently a Research Assistant at the{' '}
-            <Link
-              href="https://aiis.snu.ac.kr/"
-              isExternal
-              display="inline"
-              textDecoration="none"
-              letterSpacing="normal"
-              fontWeight="normal"
-              _hover={{
-                textDecoration: 'underline',
-                color: 'teal.300',
-              }}
-            >
-              Seoul National University AI Institute
-            </Link>{' '}
-            and a Research Intern at{' '}
-            <Link
-              href="https://www.tomorrow-robotics.com/"
-              isExternal
-              display="inline"
-              textDecoration="none"
-              letterSpacing="normal"
-              fontWeight="normal"
-              _hover={{
-                textDecoration: 'underline',
-                color: 'teal.300',
-              }}
-            >
-              Tomorrow Robotics
-            </Link>
             .
             <br />
-            &nbsp;&nbsp;My research interests focus on Vision-Language-Action (VLA), particularly leveraging computer vision 
-            to enable intelligent agents to perceive, understand, and interact with dynamic real-world environments. 
-            I am actively exploring these directions and look forward to sharing my future progress.
+            My research interests lie in Vision-Language-Action (VLA) and Vision-and-Language Navigation (VLN), with a focus on developing spatial perception capabilities for intelligent agents that can effectively perceive and interact with dynamic real-world environments.
           </Paragraph>
           <Box align="center" my={4}>
             <Button
@@ -202,16 +230,10 @@ const Home = () => {
             News
           </Heading>
           <BioSection>
-            <BioYear>2025</BioYear>
+            <BioYear>2026</BioYear>
             <Box pl={4}>
               <Text mb={1}>
-                Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
-              </Text>
-              <Text mb={1}>
-                Started as a Research Assistant at Seoul National University AI Institute in June 2025.
-              </Text>
-              <Text>
-                Currently working as a Research Intern at Tomorrow Robotics since June 2025.
+                Admitted to the M.S. program, Interdisciplinary Program in Artificial Intelligence, Seoul National University.
               </Text>
             </Box>
           </BioSection>
@@ -231,10 +253,20 @@ const Home = () => {
             {showOldNews ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </Heading>
           <Collapse in={showOldNews} animateOpacity>
-            {/* <BioSection>
-              <BioYear>2023.05</BioYear>
-              non.
-            </BioSection> */}
+            <BioSection>
+              <BioYear>2025</BioYear>
+              <Box pl={4}>
+                <Text mb={1}>
+                  Started as a Research Assistant at Seoul National University AI Institute in June 2025.
+                </Text>
+                <Text>
+                  Currently working as a Research Intern at Tomorrow Robotics since June 2025.
+                </Text>
+                <Text mb={1}>
+                  Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
+                </Text>
+              </Box>
+            </BioSection>
           </Collapse>
         </Section>
 
@@ -300,7 +332,7 @@ const Home = () => {
           
           <BioSection>
             <BioYear>2025.06 – Present</BioYear>
-            Research Assistant, Seoul National University AI Institute
+            Research Assistant, Interdisciplinary Program in Artificial Intelligence at Seoul National University
           </BioSection>
 
           <BioSection>

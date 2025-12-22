@@ -2,39 +2,33 @@ import NextLink from 'next/link'
 import { Container, Heading, SimpleGrid, Box, Divider, Button, Text } from '@chakra-ui/react'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
-import { PubGridItem, PubGridItemLink } from '../components/grid-item'
+import { PubGridItem } from '../components/grid-item'
 
 const Publications = () => (
   <Layout title="Publications">
-    <Container maxW="100%">
+    <Container maxW="container.lg">
       <Heading as="h3" fontSize={20} mb={4}>
         Publications
       </Heading>
       
-      <SimpleGrid columns={{sm:1}} gap={6}>
-        {/* <Section>
+      <SimpleGrid columns={{ sm: 1 }} gap={6}>
+        <Section>
           <PubGridItem
-            id="-"
-            title="-"
-            thumbnail={-}
-            journal="IEEE/CVF"
-            project_page="-"
-            author=<p>- <b>-</b>, -</p>
-            paper="-"
+            id="espada-arxiv-2512-07371"
+            title="ESPADA: Execution Speedup via Semantics Aware Demonstration Data Downsampling for Imitation Learning"
+            // thumbnail={espadaThumb}  // ✅ 썸네일 있으면 주석 해제
+            journal="arXiv"
+            project_page="https://project-espada.github.io/espada/"
+            author={"Byungju Kim (1,2)*, Jinu Pahk (1,2)*, Chungwoo Lee (1)*, Jaejoon Kim (1,3)*, Jangha Lee {1}*"}
+            paper="https://www.arxiv.org/pdf/2512.07371"
             video="none"
             code="none"
             slides="none"
           >
           </PubGridItem>
-        </Section> */}
-        
-       
+        </Section>
+
       </SimpleGrid>
-      <Divider my={6} />
-      <Text textAlign="center">
-        I’m currently diving deep into research to publish my first paper as soon as possible. Stay tuned!
-      </Text>
-      <Divider my={6} />
       <Box my={6} align="center">
         <Button as={NextLink} href="/" colorScheme="teal">
           Return to home
