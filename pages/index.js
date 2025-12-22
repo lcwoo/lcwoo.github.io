@@ -10,7 +10,8 @@ import {
   ListItem,
   Collapse,
   Text,
-  Image as ChakraImage
+  Image as ChakraImage,
+  VStack
 } from '@chakra-ui/react';
 import { ChevronRightIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import Paragraph from '../components/paragraph';
@@ -220,7 +221,7 @@ const Home = () => {
               rightIcon={<ChevronRightIcon />}
               colorScheme="teal"
             >
-              publications
+              Publications
             </Button>
           </Box>
         </Section>
@@ -232,9 +233,11 @@ const Home = () => {
           <BioSection>
             <BioYear>2026</BioYear>
             <Box pl={4}>
-              <Text mb={1}>
-                Admitted to the M.S. program, Interdisciplinary Program in Artificial Intelligence, Seoul National University.
-              </Text>
+              <VStack align="start" spacing={1}>
+                <Text>
+                  Admitted to the M.S. program, Interdisciplinary Program in Artificial Intelligence, Seoul National University.
+                </Text>
+              </VStack>
             </Box>
           </BioSection>
         </Section>
@@ -248,6 +251,8 @@ const Home = () => {
             cursor="pointer"
             onClick={() => setShowOldNews(!showOldNews)}
             display="flex"
+            alignItems="center"
+            gap={2}
           >
             Old News
             {showOldNews ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -256,15 +261,17 @@ const Home = () => {
             <BioSection>
               <BioYear>2025</BioYear>
               <Box pl={4}>
-                <Text mb={1}>
-                  Started as a Research Assistant at Seoul National University AI Institute in June 2025.
-                </Text>
-                <Text>
-                  Currently working as a Research Intern at Tomorrow Robotics since June 2025.
-                </Text>
-                <Text mb={1}>
-                  Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
-                </Text>
+                <VStack align="start" spacing={1}>
+                  <Text>
+                    Started as a Research Assistant at Seoul National University AI Institute in June 2025.
+                  </Text>
+                  <Text>
+                    Currently working as a Research Intern at Tomorrow Robotics since June 2025.
+                  </Text>
+                  <Text>
+                    Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.
+                  </Text>
+                </VStack>
               </Box>
             </BioSection>
           </Collapse>
@@ -274,42 +281,48 @@ const Home = () => {
           <Heading as="h3" variant="section-title">
             Info
           </Heading>
+
           <List>
             <ListItem>
-              <Link href="https://github.com/lcwoo" target="_blank">
-                <Button
-                  variant="ghost"
-                  colorScheme="teal"
-                  leftIcon={<IoLogoGithub />}
-                >
-                  GitHub
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href="https://github.com/lcwoo"
+                isExternal
+                variant="ghost"
+                colorScheme="teal"
+                leftIcon={<IoLogoGithub />}
+              >
+                GitHub
+              </Button>
             </ListItem>
+
             <ListItem>
-              <Link href="mailto: canwooj@gmail.com" target="_blank">
-                <Button
-                  variant="ghost"
-                  colorScheme="teal"
-                  leftIcon={<IoMailUnread />}
-                >
-                  e-mail
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href="mailto:canwooj@gmail.com"
+                variant="ghost"
+                colorScheme="teal"
+                leftIcon={<IoMailUnread />}
+              >
+                E-mail
+              </Button>
             </ListItem>
+
             <ListItem>
-              <Link href="https://www.linkedin.com/in/chungwoo-lee" target="_blank">
-                <Button
-                  variant="ghost"
-                  colorScheme="teal"
-                  leftIcon={<IoLogoLinkedin />}
-                >
-                  LinkedIn
-                </Button>
-              </Link>
+              <Button
+                as={Link}
+                href="https://www.linkedin.com/in/chungwoo-lee"
+                isExternal
+                variant="ghost"
+                colorScheme="teal"
+                leftIcon={<IoLogoLinkedin />}
+              >
+                LinkedIn
+              </Button>
             </ListItem>
           </List>
-        </Section>  
+        </Section>
+
 
         <Section delay={0.2}>
           <Heading as="h3" variant="section-title">
