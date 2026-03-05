@@ -342,14 +342,18 @@ const Home = () => {
           <Heading as="h3" variant="section-title">
             Experience
           </Heading>
-          
           <BioSection>
-            <BioYear>2025.06 – Present</BioYear>
-            Research Assistant, Interdisciplinary Program in Artificial Intelligence at Seoul National University
+            <BioYear>2026.03 – Present</BioYear>
+            M.S. Student & Research Assistant, Interdisciplinary Program in Artificial Intelligence at Seoul National University
           </BioSection>
 
           <BioSection>
-            <BioYear>2025.06 – Present</BioYear>
+            <BioYear>2025.06 – 2026.02</BioYear>
+            Research Intern, Interdisciplinary Program in Artificial Intelligence at Seoul National University
+          </BioSection>
+
+          <BioSection>
+            <BioYear>2025.06 – 2026.01</BioYear>
             Research Intern, Tomorrow Robotics
           </BioSection>
 
@@ -361,11 +365,6 @@ const Home = () => {
           <BioSection>
             <BioYear>2020.07 – 2022.01</BioYear>
             Sergeant (Optical/Guard Equipment Maintenance), ROK Army Logistics Command
-          </BioSection>
-
-          <BioSection>
-            <BioYear>2019.02 – 2020.07</BioYear>
-            Autory Automotive Club, Sejong University
           </BioSection>
         </Section>
 
