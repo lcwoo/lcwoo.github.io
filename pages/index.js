@@ -344,7 +344,7 @@ const Home = () => {
           </Heading>
           <BioSection>
             <BioYear>2026.03 – Present</BioYear>
-            M.S. Student & Research Assistant, Interdisciplinary Program in Artificial Intelligence at Seoul National University
+            M.S. Student, Interdisciplinary Program in Artificial Intelligence at Seoul National University
           </BioSection>
 
           <BioSection>
