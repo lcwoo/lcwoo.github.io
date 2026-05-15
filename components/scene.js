@@ -1,139 +1,161 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
-import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { loadGLTFModel } from '../lib/model'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import * as GaussianSplats3D from '@mkkellogg/gaussian-splats-3d'
 import { SceneSpinner, SceneContainer } from './scene-loader'
-import { useRouter } from 'next/router'
+import SplatControls, {
+  DEFAULT_SPLAT_PARAMS,
+  applySplatParams
+} from './splat-controls'
+import { setupTorsoOrbit } from '../lib/splat-orbit'
 
-function easeOutCirc(x) {
-  return Math.sqrt(1 - Math.pow(x - 1, 4))
+const SPLAT_PATH = '/iron_man_best.ksplat'
+
+/** Serialize dispose so Strict Mode remount does not stack viewers on one node. */
+let disposeChain = Promise.resolve()
+
+async function disposeViewer(viewer) {
+  if (!viewer) return
+  try {
+    viewer.stop?.()
+    await viewer.dispose?.()
+  } catch (error) {
+    if (error?.name !== 'NotFoundError') {
+      console.warn('Failed to dispose Gaussian splat viewer:', error)
+    }
+  }
 }
 
 const Scene = () => {
-  const refContainer = useRef()
+  const refContainer = useRef(null)
+  const viewerRef = useRef(null)
+  const paramsRef = useRef(DEFAULT_SPLAT_PARAMS)
   const [loading, setLoading] = useState(true)
-  const refRenderer = useRef()
-  const [scenePath, setScenePath] = useState('')
-  const router = useRouter()
+  const [error, setError] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [params, setParams] = useState(DEFAULT_SPLAT_PARAMS)
 
-  useEffect(() => {
-    setScenePath(`/sponge-webp.glb`)
-  }, [router.basePath])
+  paramsRef.current = params
 
-  const handleWindowResize = useCallback(() => {
-    const { current: renderer } = refRenderer
-    const { current: container } = refContainer
-    if (container && renderer) {
-      const scW = container.clientWidth
-      const scH = container.clientHeight
-      renderer.setSize(scW, scH)
+  const handleParamsChange = useCallback(next => {
+    setParams(next)
+    if (viewerRef.current) {
+      applySplatParams(viewerRef.current, next)
     }
   }, [])
 
   useEffect(() => {
-    const { current: container } = refContainer
-    if (!container || !scenePath) return
+    if (!refContainer.current) return undefined
 
-    const scW = container.clientWidth
-    const scH = container.clientHeight
+    let cancelled = false
+    let activeViewer = null
+    let pendingViewer = null
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-    })
-    renderer.setPixelRatio(window.devicePixelRatio)
-    renderer.setSize(scW, scH)
-    renderer.outputColorSpace = THREE.SRGBColorSpace
-    // 그림자 완전히 비활성화 - 성능 개선
-    renderer.shadowMap.enabled = false
-    container.appendChild(renderer.domElement)
-    refRenderer.current = renderer
+    const boot = async () => {
+      await disposeChain
 
-    const scene = new THREE.Scene()
+      if (cancelled || !refContainer.current) return null
 
-    const target = new THREE.Vector3(0, 3, 0)
-    const initialCameraPosition = new THREE.Vector3(
-      20 * Math.sin(0.2 * Math.PI),
-      10,
-      20 * Math.cos(0.2 * Math.PI)
-    )
+      const viewer = new GaussianSplats3D.Viewer({
+        rootElement: refContainer.current,
+        cameraUp: [0, 1, 0],
+        initialCameraPosition: [0, 0.55, 2.15],
+        initialCameraLookAt: [0, 0.35, 0],
+        sphericalHarmonicsDegree: 0,
+        sharedMemoryForWorkers: false,
+        selfDrivenMode: true,
+        useBuiltInControls: true,
+        antialiased: true,
+        enableOptionalEffects: true
+      })
 
-    // Use the smaller dimension to maintain aspect ratio
-    const minDimension = Math.min(scW, scH)
-    const scale = minDimension * 0.007 + 4.8
-    const camera = new THREE.OrthographicCamera(
-      -scale,
-      scale,
-      scale,
-      -scale,
-      0.01,
-      50000
-    )
-    camera.position.copy(initialCameraPosition)
-    camera.lookAt(target)
+      pendingViewer = viewer
 
-    const ambientLight = new THREE.AmbientLight(0xffe0aa, 1.2)
-    scene.add(ambientLight)
-    
-    const directionalLight1 = new THREE.DirectionalLight(0xffaa33, 1)
-    directionalLight1.position.set(8, 20, 8)
-    scene.add(directionalLight1)
-    
-    const directionalLight2 = new THREE.DirectionalLight(0x9933ff, 3.5)
-    directionalLight2.position.set(-6, 16, -5)
-    scene.add(directionalLight2)
-
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.autoRotate = true
-    controls.target = target
-
-    loadGLTFModel(scene, scenePath, {
-      receiveShadow: false,
-      castShadow: false,
-    }).then(() => {
-      animate()
-      setLoading(false)
-    })
-
-    let req = null
-    let frame = 0
-    const animate = () => {
-      req = requestAnimationFrame(animate)
-
-      frame = frame <= 100 ? frame + 1 : frame
-
-      if (frame <= 100) {
-        const p = initialCameraPosition
-        const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 13.1
-
-        camera.position.y = 10
-        camera.position.x = p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-        camera.position.z = p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
-        camera.lookAt(target)
-      } else {
-        controls.update()
+      if (cancelled) {
+        await disposeViewer(viewer)
+        pendingViewer = null
+        return null
       }
 
-      renderer.render(scene, camera)
+      try {
+        await viewer.addSplatScene(SPLAT_PATH, {
+          progressiveLoad: false,
+          showLoadingUI: false
+        })
+
+        if (cancelled) {
+          await disposeViewer(viewer)
+          pendingViewer = null
+          return null
+        }
+
+        pendingViewer = null
+        setupTorsoOrbit(viewer)
+        applySplatParams(viewer, paramsRef.current)
+        viewer.start()
+        viewerRef.current = viewer
+        setLoading(false)
+        setReady(true)
+        return viewer
+      } catch (loadError) {
+        console.error('Failed to load Gaussian splat scene:', loadError)
+        await disposeViewer(viewer)
+        pendingViewer = null
+        if (!cancelled) {
+          setError(true)
+          setLoading(false)
+        }
+        return null
+      }
     }
 
-    return () => {
-      cancelAnimationFrame(req)
-      renderer.domElement.remove()
-      renderer.dispose()
-    }
-  }, [scenePath])
+    const bootPromise = boot().then(viewer => {
+      activeViewer = viewer
+    })
 
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowResize, false)
     return () => {
-      window.removeEventListener('resize', handleWindowResize, false)
+      cancelled = true
+      setReady(false)
+      viewerRef.current = null
+      disposeChain = Promise.all([disposeChain, bootPromise])
+        .then(async () => {
+          const viewer = activeViewer || pendingViewer
+          pendingViewer = null
+          activeViewer = null
+          if (viewer) {
+            await disposeViewer(viewer)
+          }
+        })
+        .catch(() => {})
     }
-  }, [handleWindowResize])
+  }, [])
 
   return (
-    <SceneContainer ref={refContainer}>
+    <SceneContainer>
+      <div
+        ref={refContainer}
+        className="voxel-dog"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      />
+      {ready && (
+        <SplatControls params={params} onChange={handleParamsChange} />
+      )}
       {loading && <SceneSpinner />}
+      {error && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'grid',
+            placeItems: 'center',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontSize: '0.76rem',
+            color: '#ff6b6b',
+            zIndex: 4,
+            pointerEvents: 'none'
+          }}
+        >
+          failed to load iron_man_best.ksplat
+        </div>
+      )}
     </SceneContainer>
   )
 }

@@ -7,9 +7,14 @@ import {
   LinkOverlay,
   Link,
   Stack,
-  Button
+  Button,
+  Badge,
+  Heading,
+  HStack,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
+import { ChevronRightIcon } from '@chakra-ui/icons'
 
 export const GridItem = ({ children, href, title, thumbnail }) => (
   <Box w="100%" textAlign="center">
@@ -63,7 +68,7 @@ export const GridItemStyle = () => (
   <Global
     styles={`
       .grid-item-thumbnail {
-        border-radius: 12px;
+        border-radius: 18px;
       }
     `}
   />
@@ -71,7 +76,6 @@ export const GridItemStyle = () => (
 
 export const PubGridItem = ({
   children,
-  id,
   title,
   thumbnail,
   journal,
@@ -81,60 +85,89 @@ export const PubGridItem = ({
   video,
   code,
   slides
-}) => (
-  <Box
-    w="100%"
-    maxW="900px"
-    mx="auto"
-    p={5}
-    borderWidth="1px"
-    borderColor="whiteAlpha.200"
-    borderRadius="xl"
-    bg="whiteAlpha.50"
-    textAlign="left"
-  >
-    {thumbnail && (
-      <Image
-        src={thumbnail}
-        alt={title}
-        className="grid-item-thumbnail"
-        placeholder="blur"
-      />
-    )}
-    <Text mt={2} fontSize={18} fontWeight="bold">
-      {title}
-    </Text>
-    {journal && <Text fontSize={14} color="gray.500">{journal}</Text>}
-    {author && <Text fontSize={14} color="gray.500">{author}</Text>}
-    <Text fontSize={14}>{children}</Text>
-    <Stack direction="row" spacing={3} mt={3}>
-      {project_page && project_page !== 'none' && (
-        <Button
-          as={Link}
-          href={project_page}
-          isExternal
-          size="sm"
-          variant="solid"
-          colorScheme="teal"
-        >
-          Project Page
-        </Button>
+}) => {
+  const borderColor = useColorModeValue('blackAlpha.100', 'whiteAlpha.200')
+  const surface = useColorModeValue(
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.045)'
+  )
+  const muted = useColorModeValue('ink.600', 'ink.300')
+  const hoverBorder = useColorModeValue('brand.500', 'brand.300')
+
+  const actions = [
+    ['Project Page', project_page],
+    ['Paper', paper],
+    ['Video', video],
+    ['Code', code],
+    ['Slides', slides]
+  ].filter(([, href]) => href && href !== 'none')
+
+  return (
+    <Box
+      w="100%"
+      p={{ base: 5, md: 6 }}
+      border="1px solid"
+      borderColor={borderColor}
+      borderRadius={{ base: '24px', md: '30px' }}
+      bg={surface}
+      textAlign="left"
+      backdropFilter="blur(16px)"
+      transition="transform 180ms ease, border-color 180ms ease, background 180ms ease"
+      _hover={{
+        transform: 'translateY(-3px)',
+        borderColor: hoverBorder
+      }}
+    >
+      {thumbnail && (
+        <Box mb={5} overflow="hidden" borderRadius="22px">
+          <Image
+            src={thumbnail}
+            alt={title}
+            className="grid-item-thumbnail"
+            placeholder="blur"
+          />
+        </Box>
       )}
-      {paper && paper !== 'none' && (
-        <Button
-          as={Link}
-          href={paper}
-          isExternal
-          size="sm"
-          variant="solid"
-          colorScheme="teal"
-        >
-          Paper
-        </Button>
+
+      <HStack spacing={2} mb={3} flexWrap="wrap">
+        {journal && <Badge>{journal}</Badge>}
+        <Badge>publication</Badge>
+      </HStack>
+
+      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} lineHeight={1.25}>
+        {title}
+      </Heading>
+
+      {author && (
+        <Text mt={3} color={muted} fontSize="sm" lineHeight={1.7}>
+          {author}
+        </Text>
       )}
-    </Stack>
-  </Box>
-)
+
+      {children && (
+        <Text mt={3} fontSize="sm">
+          {children}
+        </Text>
+      )}
+
+      <Stack direction={{ base: 'column', sm: 'row' }} spacing={3} mt={5}>
+        {actions.map(([label, href]) => (
+          <Button
+            key={label}
+            as={Link}
+            href={href}
+            isExternal
+            size="sm"
+            variant={label === 'Paper' ? 'solid' : 'outline'}
+            rightIcon={<ChevronRightIcon />}
+          >
+            {label}
+          </Button>
+        ))}
+      </Stack>
+    </Box>
+  )
+}
 
 export const PubGridItemLink = ({ href, children }) => (
   <LinkBox>
