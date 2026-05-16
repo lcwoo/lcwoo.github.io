@@ -62,6 +62,7 @@ const SplatControls = ({ params, onChange }) => {
 
   return (
     <Box
+      display={{ base: 'none', md: 'block' }}
       position="absolute"
       top="12px"
       right="12px"
