@@ -1089,7 +1089,7 @@ const Home = () => {
                 </Link>
                 , advised by{' '}
                 <Link href="https://bi.snu.ac.kr/" isExternal>
-                  Prof. Byung-Tak Zhang
+                  Prof. Byoung-Tak Zhang
                 </Link>
                 . I received my B.S. in{' '}
                 <Link href="https://ae.hanyang.ac.kr/%ED%99%88" isExternal>
