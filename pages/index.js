@@ -1244,11 +1244,10 @@ const Home = () => {
                 fontSize={{ base: '2xl', md: '3xl' }}
                 fontWeight={500}
               >
-                Let&apos;s discuss spatial intelligence and embodied agents.
+                Let&apos;s discuss spatial intelligence for embodied agents.
               </Heading>
               <Text mt={3} color={bodyColor}>
-                Open to research conversations around VLA, VLN, robotics, and
-                perception systems for dynamic environments.
+              Open to research conversations on VLA, VLN, robotics, and perception systems for dynamic environments.
               </Text>
             </Box>
             <VStack align="stretch" spacing={3}>
