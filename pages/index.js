@@ -73,7 +73,7 @@ const oldNews = [
   {
     date: '2025.06',
     tag: 'intern',
-    text: 'Currently working as a Research Intern at Tomorrow Robotics since June 2025.'
+    text: 'Currently working as a Research Intern at Tommoro Robotics since June 2025.'
   },
   {
     date: '2025.02',
@@ -120,7 +120,7 @@ const experience = [
   {
     period: '2025.06 – 2026.01',
     role: 'Research Intern',
-    org: 'Tomorrow Robotics',
+    org: 'Tomorro Robotics',
     url: 'https://tommoro.ai/',
     notes: ['Worked on robotics research and development as a research intern.']
   },
