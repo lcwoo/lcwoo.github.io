@@ -5,9 +5,8 @@ import ThemeToggleButton from './theme-toggle-button'
 
 const menuItems = [
   { label: 'about', href: '/#about' },
-  { label: 'news', href: '/#news' },
   { label: 'publications', href: '/#publications' },
-  { label: 'projects', href: '/#selected-projects' },
+  { label: 'news', href: '/#news' },
   { label: 'experience', href: '/#experience' },
   { label: 'contact', href: '/#contact' }
 ]

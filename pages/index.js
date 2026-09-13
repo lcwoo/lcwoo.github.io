@@ -13,7 +13,6 @@ import {
   VStack,
   HStack,
   Stack,
-  SimpleGrid,
   Badge,
   Flex,
   useColorModeValue
@@ -26,6 +25,9 @@ import {
 import Paragraph from '../components/paragraph'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
+import AuthorNames from '../components/author-names'
+import PublicationThumbnail from '../components/publication-thumbnail'
+import { getPublications } from '../data/publications'
 import {
   IoMailUnread,
   IoLogoLinkedin,
@@ -55,12 +57,17 @@ const news = [
   {
     date: '2026',
     tag: 'accepted',
-    text: 'ESPADA was accepted to IEEE Robotics and Automation Letters (RA-L).'
+    text: 'Our VLA work was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
+  },
+  {
+    date: '2026',
+    tag: 'accepted',
+    text: 'ESPADA was accepted for publication in IEEE RA-L and will be presented at IROS 2026.'
   },
   {
     date: '2026',
     tag: 'milestone',
-    text: 'Admitted to the M.S. program, Interdisciplinary Program in Artificial Intelligence, Seoul National University.'
+    text: 'Started my M.S. at Seoul National University (GSAI).'
   }
 ]
 
@@ -139,9 +146,9 @@ const experience = [
 ]
 
 const interests = [
-  'Vision-Language-Action',
-  'Vision-and-Language Navigation',
-  'Robotics'
+  'Embodied AI',
+  'Machine Learning',
+  'Robot Learning'
 ]
 
 const contactLinks = [
@@ -369,11 +376,13 @@ const NewsItem = ({ item }) => {
 const RectTag = ({ children, tone = 'accent', ...props }) => {
   const accentColor = useColorModeValue('#3B5BFE', '#5EEAD4')
   const warnColor = useColorModeValue('#B97A1B', '#E0B062')
+  const subtleColor = useColorModeValue('ink.500', 'ink.400')
   const accentBg = useColorModeValue(
     'rgba(59,91,254,0.10)',
     'rgba(94,234,212,0.14)'
   )
-  const color = tone === 'warn' ? warnColor : accentColor
+  const color =
+    tone === 'warn' ? warnColor : tone === 'subtle' ? subtleColor : accentColor
 
   return (
     <Box
@@ -390,7 +399,7 @@ const RectTag = ({ children, tone = 'accent', ...props }) => {
       border="1px solid"
       borderColor={color}
       borderRadius="4px"
-      bg={tone === 'warn' ? 'transparent' : accentBg}
+      bg={tone === 'accent' ? accentBg : 'transparent'}
       {...props}
     >
       {children}
@@ -398,175 +407,109 @@ const RectTag = ({ children, tone = 'accent', ...props }) => {
   )
 }
 
-const PublicationCard = () => {
-  const muted = useColorModeValue('ink.500', 'ink.400')
+const HomeVenueTag = ({ children, primary = false, href }) => {
+  const accentColor = useColorModeValue('#3B5BFE', '#5EEAD4')
+  const mutedColor = useColorModeValue('ink.500', 'ink.400')
+  const accentBg = useColorModeValue(
+    'rgba(59,91,254,0.08)',
+    'rgba(94,234,212,0.10)'
+  )
+  const color = primary ? accentColor : mutedColor
+
+  return (
+    <Box
+      as={href ? Link : 'span'}
+      href={href}
+      isExternal={Boolean(href)}
+      display="inline-flex"
+      alignItems="center"
+      fontFamily="mono"
+      fontSize="0.62rem"
+      letterSpacing="0.04em"
+      color={color}
+      px="6px"
+      py="1px"
+      border="1px solid"
+      borderColor={color}
+      borderRadius="3px"
+      bg={primary ? accentBg : 'transparent'}
+      lineHeight={1.4}
+      whiteSpace="nowrap"
+      _hover={href ? { opacity: 0.72, textDecoration: 'none' } : undefined}
+    >
+      {children}
+    </Box>
+  )
+}
+
+const PublicationCard = ({ publication }) => {
+  const { title, authors, venues, links = {} } = publication
   const borderColor = useColorModeValue(
     'rgba(15,18,30,0.10)',
     'rgba(255,255,255,0.08)'
   )
   const accent = useColorModeValue('#3B5BFE', '#5EEAD4')
-  const roleColor = useColorModeValue('ink.700', 'ink.200')
+  const actions = [
+    ['paper', links.paper],
+    ['project', links.project]
+  ].filter(([, href]) => href)
 
   return (
-    <Card
-      p="22px 22px 18px"
-      _hover={{ borderColor: accent, transform: 'translateY(-2px)' }}
+    <Box
+      p={{ base: '10px 12px', md: '12px 14px' }}
+      border="1px solid"
+      borderColor={borderColor}
+      borderRadius="12px"
     >
-      <Flex justify="space-between" align="center" mb="12px">
-        <RectTag>arXiv</RectTag>
-        <Text fontFamily="mono" fontSize="0.78rem" color={muted}>
-          2025
-        </Text>
-      </Flex>
-      <Heading
-        as="h3"
-        fontSize="1.02rem"
-        fontWeight={500}
-        lineHeight={1.35}
-        mb={2}
-      >
-        ESPADA: Execution Speedup via Semantics Aware Demonstration Data
-        Downsampling for Imitation Learning
-      </Heading>
-      <Text color={muted} fontSize="0.85rem" mb="14px">
-        semantics-aware data downsampling · imitation learning
-      </Text>
       <Flex
-        justify="space-between"
-        align="center"
-        flexWrap="wrap"
-        gap={2}
-        pt="12px"
-        borderTop="1px dashed"
-        borderColor={borderColor}
+        direction={{ base: 'column', md: 'row' }}
+        align="start"
+        gap={{ base: '10px', md: '14px' }}
       >
-        <Text fontFamily="mono" fontSize="0.76rem" color={roleColor}>
-          co-author · Chungwoo Lee
-        </Text>
-        <HStack spacing={2}>
-          <Button
-            as={Link}
-            href="https://www.arxiv.org/pdf/2512.07371"
-            isExternal
-            size="sm"
-            variant="outline"
+        <PublicationThumbnail publication={publication} size="home" />
+        <Box minW={0} flex={1}>
+          <Flex gap="6px" flexWrap="wrap" mb="6px">
+            {venues.map(venue => (
+              <HomeVenueTag
+                key={venue.homeLabel}
+                primary={venue.primary}
+                href={venue.href}
+              >
+                {venue.homeLabel}
+              </HomeVenueTag>
+            ))}
+          </Flex>
+          <Heading
+            as="h3"
+            fontSize="0.95rem"
+            fontWeight={600}
+            lineHeight={1.35}
           >
-            paper
-          </Button>
-          <Button
-            as={Link}
-            href="https://project-espada.github.io/espada/"
-            isExternal
-            size="sm"
-            variant="outline"
-          >
-            project
-          </Button>
-        </HStack>
-      </Flex>
-    </Card>
-  )
-}
-
-const ProjectCard = ({
-  media,
-  badge,
-  title,
-  subtitle,
-  description,
-  keywords,
-  action
-}) => {
-  const borderColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const mediaBg = useColorModeValue('#F2F3F7', '#111319')
-  const pattern = useColorModeValue(
-    'repeating-linear-gradient(45deg, rgba(15,18,30,0.035) 0 2px, transparent 2px 6px)',
-    'repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 6px)'
-  )
-  const muted = useColorModeValue('ink.500', 'ink.400')
-  const bodyColor = useColorModeValue('ink.700', 'ink.200')
-  const badgeBg = useColorModeValue(
-    'rgba(250,250,252,0.70)',
-    'rgba(11,12,16,0.70)'
-  )
-  const badgeBorder = useColorModeValue(
-    'rgba(15,18,30,0.22)',
-    'rgba(255,255,255,0.18)'
-  )
-  const badgeText = useColorModeValue('ink.900', 'ink.50')
-
-  return (
-    <Card
-      display="grid"
-      gridTemplateColumns={{
-        base: '1fr',
-        md: 'minmax(0, 1fr) minmax(0, 1.3fr)'
-      }}
-      overflow="hidden"
-    >
-      <Box
-        position="relative"
-        bg={`${pattern}, ${mediaBg}`}
-        borderRight={{ base: 0, md: '1px solid' }}
-        borderBottom={{ base: '1px solid', md: 0 }}
-        borderColor={borderColor}
-        aspectRatio={{ base: '16 / 9', md: '4 / 3' }}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        overflow="hidden"
-      >
-        {badge && (
-          <Box
-            position="absolute"
-            top="14px"
-            left="14px"
-            px="11px"
-            py="5px"
-            borderRadius="full"
-            bg={badgeBg}
-            border="1px solid"
-            borderColor={badgeBorder}
-            color={badgeText}
-            fontFamily="mono"
-            fontSize="0.68rem"
-            letterSpacing="0.1em"
-            textTransform="uppercase"
-            backdropFilter="blur(8px)"
-          >
-            {badge}
+            {title}
+          </Heading>
+          <Box mt="4px">
+            <AuthorNames authors={authors} fontSize="0.8rem" lineHeight={1.5} />
           </Box>
-        )}
-        {media}
-      </Box>
-      <Box p={{ base: '24px', md: '26px 28px 24px' }}>
-        <Heading as="h3" fontSize="1.45rem" fontWeight={500}>
-          {title}
-        </Heading>
-        {subtitle && (
-          <Text
-            color={muted}
-            fontFamily="mono"
-            fontSize="0.8rem"
-            letterSpacing="0.02em"
-          >
-            {subtitle}
-          </Text>
-        )}
-        <Text mt={3} color={bodyColor} fontSize="0.94rem" lineHeight={1.7}>
-          {description}
-        </Text>
-        <HStack mt="14px" spacing="6px" flexWrap="wrap">
-          {keywords.map(keyword => (
-            <Badge key={keyword}>{keyword}</Badge>
-          ))}
-        </HStack>
-        {action && <Box mt={5}>{action}</Box>}
-      </Box>
-    </Card>
+          {actions.length > 0 && (
+            <HStack spacing={4} mt="6px" flexWrap="wrap">
+              {actions.map(([label, href]) => (
+                <Link
+                  key={label}
+                  href={href}
+                  isExternal
+                  fontFamily="mono"
+                  fontSize="0.75rem"
+                  color={accent}
+                  letterSpacing="0.02em"
+                >
+                  {label} ↗
+                </Link>
+              ))}
+            </HStack>
+          )}
+        </Box>
+      </Flex>
+    </Box>
   )
 }
 
@@ -1138,13 +1081,27 @@ const Home = () => {
           </Box>
         </Section>
 
-        <Section id="live-demo" delay={0.06}>
-          <SectionHead
-            index="01"
-            title="Demo"
-            extra={<RectTag>3D Gaussian Splatting</RectTag>}
-          />
-          <Scene />
+        <Section id="publications" delay={0.06}>
+          <SectionHead index="01" title="Publications" />
+          <Stack spacing="10px">
+            {getPublications().map(publication => (
+              <PublicationCard
+                key={publication.id}
+                publication={publication}
+              />
+            ))}
+          </Stack>
+          <Text
+            fontFamily="mono"
+            fontSize="0.76rem"
+            color={muted}
+            mt="18px"
+            textAlign="center"
+          >
+            <Link as={NextLink} href="/publications">
+              view publication archive
+            </Link>
+          </Text>
         </Section>
 
         <Section id="news" delay={0.1}>
@@ -1178,59 +1135,39 @@ const Home = () => {
           </VStack>
         </Section>
 
-        <Section id="publications" delay={0.14}>
-          <SectionHead index="03" title="Publications" />
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing="16px">
-            <PublicationCard />
-          </SimpleGrid>
-          <Text
-            fontFamily="mono"
-            fontSize="0.76rem"
-            color={muted}
-            mt="18px"
-            textAlign="center"
-          >
-            <Link as={NextLink} href="/publications">
-              view publication archive
-            </Link>
+        <Section id="ongoing" delay={0.14}>
+          <SectionHead
+            index="03"
+            title="Ongoing Research"
+            extra={<RectTag>3DGS · VLA · Spatial Interaction</RectTag>}
+          />
+          <Text color={bodyColor} maxW="42rem" lineHeight={1.7} mb="28px">
+            Exploring persistent 3D interaction representations for
+            Vision-Language-Action policies that remain grounded across
+            viewpoint changes, articulation, and occlusion.
           </Text>
+          <RectTag tone="subtle" mb="8px">
+            Interactive Iron Man 3DGS viewer
+          </RectTag>
+          <Text color={muted} fontSize="sm" lineHeight={1.65} maxW="42rem" mb="14px">
+            Interactive 3DGS viewer using a sample scene. This viewer is a
+            visualization sandbox, not a research result.
+          </Text>
+          <Scene />
         </Section>
 
-        <Section id="selected-projects" delay={0.18}>
-          <SectionHead index="04" title="Selected Projects" />
-          <Stack spacing="22px">
-            <ProjectCard
-              badge="homepage"
-              title="Interactive personal homepage"
-              subtitle="Next.js · Chakra UI · Three.js"
-              description="A research homepage with responsive layout, dark/light mode, and an interactive Gaussian Splatting scene using the Iron Man ksplat asset included in this project."
-              keywords={['Next.js', 'Chakra UI', 'Three.js', 'Framer Motion']}
-              media={
-                <ChakraImage
-                  src="/images/preview.png"
-                  alt="Homepage preview"
-                  w="100%"
-                  h="100%"
-                  objectFit="contain"
-                  objectPosition="center"
-                />
-              }
-            />
-          </Stack>
-        </Section>
-
-        <Section id="experience" delay={0.22}>
-          <SectionHead index="05" title="Experience" />
+        <Section id="experience" delay={0.18}>
+          <SectionHead index="04" title="Experience" />
           <Timeline items={experience} />
         </Section>
 
-        <Section id="education" delay={0.26}>
-          <SectionHead index="06" title="Education" />
+        <Section id="education" delay={0.22}>
+          <SectionHead index="05" title="Education" />
           <EducationLine items={education} />
         </Section>
 
-        <Section id="contact" delay={0.3}>
-          <SectionHead index="07" title="Contact" />
+        <Section id="contact" delay={0.26}>
+          <SectionHead index="06" title="Contact" />
           <Card
             p={{ base: 6, md: 8 }}
             display="grid"
@@ -1271,8 +1208,8 @@ const Home = () => {
           </Card>
         </Section>
 
-        <Section id="visitors" delay={0.34}>
-          <SectionHead index="08" title="Visitors" />
+        <Section id="visitors" delay={0.3}>
+          <SectionHead index="07" title="Visitors" />
           <Card p={{ base: 3, md: 5 }}>
             <Box
               id="map-area"

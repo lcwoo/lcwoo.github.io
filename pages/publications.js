@@ -14,6 +14,7 @@ import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import { PubGridItem } from '../components/grid-item'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { getPublications } from '../data/publications'
 
 const Publications = () => (
   <Layout title="Publications">
@@ -44,19 +45,9 @@ const Publications = () => (
         </Box>
 
         <VStack spacing={6} align="stretch">
-          <PubGridItem
-            id="espada-arxiv-2512-07371"
-            title="ESPADA: Execution Speedup via Semantics Aware Demonstration Data Downsampling for Imitation Learning"
-            journal="arXiv"
-            project_page="https://project-espada.github.io/espada/"
-            author={
-              'Byungju Kim (1,2)*, Jinu Pahk (1,2)*, Chungwoo Lee (1)*, Jaejoon Kim (1,3)*, Jangha Lee {1}*'
-            }
-            paper="https://www.arxiv.org/pdf/2512.07371"
-            video="none"
-            code="none"
-            slides="none"
-          />
+          {getPublications().map(publication => (
+            <PubGridItem key={publication.id} publication={publication} />
+          ))}
         </VStack>
       </Section>
 

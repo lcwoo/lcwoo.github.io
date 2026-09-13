@@ -11,10 +11,13 @@ import {
   Badge,
   Heading,
   HStack,
+  Flex,
   useColorModeValue
 } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
+import AuthorNames from './author-names'
+import PublicationThumbnail from './publication-thumbnail'
 
 export const GridItem = ({ children, href, title, thumbnail }) => (
   <Box w="100%" textAlign="center">
@@ -74,32 +77,21 @@ export const GridItemStyle = () => (
   />
 )
 
-export const PubGridItem = ({
-  children,
-  title,
-  thumbnail,
-  journal,
-  project_page,
-  author,
-  paper,
-  video,
-  code,
-  slides
-}) => {
+export const PubGridItem = ({ publication, children }) => {
+  const { title, authors, venues, links = {} } = publication
   const borderColor = useColorModeValue('blackAlpha.100', 'whiteAlpha.200')
   const surface = useColorModeValue(
     'rgba(255,255,255,0.7)',
     'rgba(255,255,255,0.045)'
   )
-  const muted = useColorModeValue('ink.600', 'ink.300')
   const hoverBorder = useColorModeValue('brand.500', 'brand.300')
 
   const actions = [
-    ['Project Page', project_page],
-    ['Paper', paper],
-    ['Video', video],
-    ['Code', code],
-    ['Slides', slides]
+    ['Paper', links.paper],
+    ['Project Page', links.project],
+    ['Video', links.video],
+    ['Code', links.code],
+    ['Slides', links.slides]
   ].filter(([, href]) => href && href !== 'none')
 
   return (
@@ -118,53 +110,67 @@ export const PubGridItem = ({
         borderColor: hoverBorder
       }}
     >
-      {thumbnail && (
-        <Box mb={5} overflow="hidden" borderRadius="22px">
-          <Image
-            src={thumbnail}
-            alt={title}
-            className="grid-item-thumbnail"
-            placeholder="blur"
-          />
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        align="start"
+        gap={{ base: 4, md: 5 }}
+      >
+        <PublicationThumbnail publication={publication} size="archive" />
+        <Box minW={0} flex={1}>
+          <HStack spacing={2} mb={3} flexWrap="wrap">
+            {venues.map(venue => {
+              const label = venue.archiveLabel || venue.homeLabel
+              return (
+                <Badge
+                  key={label}
+                  as={venue.href ? Link : undefined}
+                  href={venue.href}
+                  isExternal={Boolean(venue.href)}
+                  _hover={
+                    venue.href ? { opacity: 0.75, textDecoration: 'none' } : undefined
+                  }
+                >
+                  {label}
+                </Badge>
+              )
+            })}
+          </HStack>
+
+          <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} lineHeight={1.25}>
+            {title}
+          </Heading>
+
+          {authors?.length > 0 && (
+            <Box mt={3}>
+              <AuthorNames authors={authors} fontSize="sm" lineHeight={1.7} />
+            </Box>
+          )}
+
+          {children && (
+            <Text mt={3} fontSize="sm">
+              {children}
+            </Text>
+          )}
+
+          {actions.length > 0 && (
+            <Stack direction={{ base: 'column', sm: 'row' }} spacing={3} mt={5}>
+              {actions.map(([label, href]) => (
+                <Button
+                  key={label}
+                  as={Link}
+                  href={href}
+                  isExternal
+                  size="sm"
+                  variant={label === 'Paper' ? 'solid' : 'outline'}
+                  rightIcon={<ChevronRightIcon />}
+                >
+                  {label}
+                </Button>
+              ))}
+            </Stack>
+          )}
         </Box>
-      )}
-
-      <HStack spacing={2} mb={3} flexWrap="wrap">
-        {journal && <Badge>{journal}</Badge>}
-        <Badge>publication</Badge>
-      </HStack>
-
-      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} lineHeight={1.25}>
-        {title}
-      </Heading>
-
-      {author && (
-        <Text mt={3} color={muted} fontSize="sm" lineHeight={1.7}>
-          {author}
-        </Text>
-      )}
-
-      {children && (
-        <Text mt={3} fontSize="sm">
-          {children}
-        </Text>
-      )}
-
-      <Stack direction={{ base: 'column', sm: 'row' }} spacing={3} mt={5}>
-        {actions.map(([label, href]) => (
-          <Button
-            key={label}
-            as={Link}
-            href={href}
-            isExternal
-            size="sm"
-            variant={label === 'Paper' ? 'solid' : 'outline'}
-            rightIcon={<ChevronRightIcon />}
-          >
-            {label}
-          </Button>
-        ))}
-      </Stack>
+      </Flex>
     </Box>
   )
 }
