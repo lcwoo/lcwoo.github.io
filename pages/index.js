@@ -79,8 +79,8 @@ const oldNews = [
   },
   {
     date: '2025.06',
-    tag: 'intern',
-    text: 'Currently working as a Research Intern at Tommoro Robotics since June 2025.'
+    tag: 'Associate Researcher',
+    text: 'Currently working as a Associate Researcher at Tommoro Robotics since June 2025.'
   },
   {
     date: '2025.02',
@@ -126,10 +126,10 @@ const experience = [
   },
   {
     period: '2025.06 – 2026.01',
-    role: 'Research Intern',
+    role: 'Associate Researcher',
     org: 'Tomorro Robotics',
     url: 'https://tommoro.ai/',
-    notes: ['Worked on robotics research and development as a research intern.']
+    notes: ['Worked on robotics research and development as an associate researcher.']
   },
   {
     period: '2023.08 – 2024.10',
