@@ -86,14 +86,18 @@ const LazyScene = () => {
     <Box ref={ref}>
       <SceneContainer>
         <Flex h="100%" align="center" justify="center" position="relative">
-          <ChakraImage
+          <Box
+            as="img"
             src="/images/splat-preview.webp"
             alt="Iron Man 3DGS sample scene preview"
+            width="400"
+            height="480"
+            loading="lazy"
+            decoding="async"
             h="90%"
             w="auto"
             objectFit="contain"
             opacity={0.85}
-            loading="lazy"
           />
           <Button
             position="absolute"
@@ -1357,8 +1361,8 @@ const Home = () => {
           position="absolute"
           left="-10000px"
           top="0"
-          w="800px"
-          h="300px"
+          w="300px"
+          h="200px"
           overflow="hidden"
           pointerEvents="none"
         />
