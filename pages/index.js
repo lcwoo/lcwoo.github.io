@@ -116,8 +116,8 @@ const experience = [
     org: 'Interdisciplinary Program in Artificial Intelligence at Seoul National University',
     url: 'https://gsai.snu.ac.kr/',
     notes: [
-      'Researching spatially grounded, 3D-aware visuomotor policy learning for robot manipulation.',
-      'Working with Mobile ALOHA, AI Worker, UR5e, and GELLO platforms.'
+      'Researching Vision-Language-Action and Vision-and-Language Navigation.',
+      'Developing spatial perception capabilities for intelligent agents.'
     ]
   },
   {
@@ -134,9 +134,7 @@ const experience = [
     role: 'Associate Researcher',
     org: 'Tommoro Robotics',
     url: 'https://tommoro.ai/',
-    notes: [
-      'Co-first author of ESPADA (IEEE RA-L, presented at IROS 2026): speeding up imitation-learning policies using 3D gripper–object spatial relations.'
-    ]
+    notes: ['Worked on robotics research and development as an associate researcher.']
   },
   {
     period: '2023.08 – 2024.09',
@@ -153,9 +151,9 @@ const experience = [
 ]
 
 const interests = [
-  'Spatially Grounded Robot Learning',
-  '3D Visuomotor Policy Learning',
-  'Robot Manipulation'
+  'Embodied AI',
+  'Machine Learning',
+  'Robot Learning'
 ]
 
 const contactLinks = [
@@ -1048,13 +1046,11 @@ const Home = () => {
                 .
               </Paragraph>
               <Paragraph>
-                My research focuses on spatially grounded robot learning:
-                visuomotor policies that reason over 3D geometry and spatial
-                relations so that manipulation skills generalize across object
-                poses, instances, and scenes. I am particularly interested in
-                3D-aware policy representations (point clouds, SE(3)-equivariant
-                structure, 3D feature fields) and in bringing spatial grounding
-                into vision-language-action models.
+                My research interests lie in Vision-Language-Action (VLA) and
+                Vision-and-Language Navigation (VLN), with a focus on developing
+                spatial perception capabilities for intelligent agents that can
+                effectively perceive and interact with dynamic real-world
+                environments.
               </Paragraph>
             </Box>
 
