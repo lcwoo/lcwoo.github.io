@@ -545,19 +545,26 @@ const PublicationCard = ({ publication }) => {
           </Box>
           {actions.length > 0 && (
             <HStack spacing={4} mt="6px" flexWrap="wrap">
-              {actions.map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  isExternal
-                  fontFamily="mono"
-                  fontSize="0.75rem"
-                  color={accent}
-                  letterSpacing="0.02em"
-                >
-                  {label} ↗
-                </Link>
-              ))}
+              {actions.map(([label, href]) => {
+                // Site pages (e.g. /posters/#id) open in place; files and external URLs open in a new tab.
+                const isSitePage =
+                  href.startsWith('/') &&
+                  !/\.[a-z0-9]+$/i.test(href.split('#')[0])
+                return (
+                  <Link
+                    key={label}
+                    href={href}
+                    as={isSitePage ? NextLink : undefined}
+                    isExternal={!isSitePage}
+                    fontFamily="mono"
+                    fontSize="0.75rem"
+                    color={accent}
+                    letterSpacing="0.02em"
+                  >
+                    {label} {isSitePage ? '→' : '↗'}
+                  </Link>
+                )
+              })}
             </HStack>
           )}
         </Box>

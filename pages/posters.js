@@ -34,6 +34,8 @@ const PosterCard = ({ poster }) => {
 
   return (
     <Box
+      id={poster.id}
+      scrollMarginTop="96px"
       border="1px solid"
       borderColor={borderColor}
       borderRadius="12px"
