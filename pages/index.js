@@ -55,6 +55,11 @@ const Scene = dynamic(() => import('../components/scene'), {
 
 const news = [
   {
+    date: '2026.10',
+    tag: 'accepted',
+    text: 'SARAM, on lifelong robot learning with sparse adapters, was accepted as a poster at the NeurIPS 2026 Robot Learning Workshop.'
+  },
+  {
     date: '2026',
     tag: 'accepted',
     text: 'Our VLA work was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
@@ -75,12 +80,12 @@ const oldNews = [
   {
     date: '2025.06',
     tag: 'research',
-    text: 'Started as a Research Assistant at Seoul National University AI Institute in June 2025.'
+    text: 'Started as a Research Intern at Seoul National University AI Institute in June 2025.'
   },
   {
     date: '2025.06',
-    tag: 'Associate Researcher',
-    text: 'Currently working as a Associate Researcher at Tommoro Robotics since June 2025.'
+    tag: 'research',
+    text: 'Joined Tommoro Robotics as an Associate Researcher (June 2025 – January 2026).'
   },
   {
     date: '2025.02',
@@ -91,10 +96,10 @@ const oldNews = [
 
 const education = [
   {
-    date: '2019',
-    school: 'Boin High School',
-    degree: 'High School',
-    note: 'Completed secondary education.'
+    date: '2026 – Present',
+    school: 'Seoul National University',
+    degree: 'M.S., Interdisciplinary Program in Artificial Intelligence',
+    note: 'Advised by Prof. Byoung-Tak Zhang. Expected graduation: February 2028.'
   },
   {
     date: '2025',
@@ -111,8 +116,8 @@ const experience = [
     org: 'Interdisciplinary Program in Artificial Intelligence at Seoul National University',
     url: 'https://gsai.snu.ac.kr/',
     notes: [
-      'Researching Vision-Language-Action and Vision-and-Language Navigation.',
-      'Developing spatial perception capabilities for intelligent agents.'
+      'Researching spatially grounded, 3D-aware visuomotor policy learning for robot manipulation.',
+      'Working with Mobile ALOHA, AI Worker, UR5e, and GELLO platforms.'
     ]
   },
   {
@@ -127,12 +132,14 @@ const experience = [
   {
     period: '2025.06 – 2026.01',
     role: 'Associate Researcher',
-    org: 'Tomorro Robotics',
+    org: 'Tommoro Robotics',
     url: 'https://tommoro.ai/',
-    notes: ['Worked on robotics research and development as an associate researcher.']
+    notes: [
+      'Co-first author of ESPADA (IEEE RA-L, presented at IROS 2026): speeding up imitation-learning policies using 3D gripper–object spatial relations.'
+    ]
   },
   {
-    period: '2023.08 – 2024.10',
+    period: '2023.08 – 2024.09',
     role: 'Undergraduate Researcher',
     org: 'Intelligent Robotics & Computer Vision Lab',
     notes: ['Conducted undergraduate research in robotics and computer vision.']
@@ -146,9 +153,9 @@ const experience = [
 ]
 
 const interests = [
-  'Embodied AI',
-  'Machine Learning',
-  'Robot Learning'
+  'Spatially Grounded Robot Learning',
+  '3D Visuomotor Policy Learning',
+  'Robot Manipulation'
 ]
 
 const contactLinks = [
@@ -1041,11 +1048,13 @@ const Home = () => {
                 .
               </Paragraph>
               <Paragraph>
-                My research interests lie in Vision-Language-Action (VLA) and
-                Vision-and-Language Navigation (VLN), with a focus on developing
-                spatial perception capabilities for intelligent agents that can
-                effectively perceive and interact with dynamic real-world
-                environments.
+                My research focuses on spatially grounded robot learning:
+                visuomotor policies that reason over 3D geometry and spatial
+                relations so that manipulation skills generalize across object
+                poses, instances, and scenes. I am particularly interested in
+                3D-aware policy representations (point clouds, SE(3)-equivariant
+                structure, 3D feature fields) and in bringing spatial grounding
+                into vision-language-action models.
               </Paragraph>
             </Box>
 
@@ -1091,6 +1100,9 @@ const Home = () => {
               />
             ))}
           </Stack>
+          <Text fontFamily="mono" fontSize="0.72rem" color={muted} mt="12px">
+            * equal contribution · † corresponding author
+          </Text>
           <Text
             fontFamily="mono"
             fontSize="0.76rem"

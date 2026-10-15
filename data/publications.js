@@ -76,8 +76,39 @@ export const publications = [
     }
   },
   {
-    id: 'moaq',
+    id: 'saram',
     sortOrder: 3,
+    year: 2026,
+    month: 10,
+    title:
+      'SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning',
+    image: '/images/publications/saram-overview.png',
+    thumbnailScale: 1,
+    thumbnailPosition: 'center',
+    authors: [
+      'SeongJun Jeong',
+      'Chungwoo Lee',
+      'Gi-Cheon Kang',
+      'Byoung-Tak Zhang'
+    ],
+    venues: [
+      {
+        homeLabel: 'NeurIPS 2026 Workshop',
+        archiveLabel:
+          'NeurIPS 2026 · 8th Robot Learning Workshop (WRL) · Poster',
+        primary: false
+      },
+      {
+        homeLabel: 'Under review · IEEE RA-L',
+        archiveLabel: 'Under review at IEEE Robotics and Automation Letters (RA-L)',
+        primary: false
+      }
+    ],
+    links: {}
+  },
+  {
+    id: 'moaq',
+    sortOrder: 4,
     year: 2026,
     month: 6,
     title: 'Making Your Action Policies Interpretable: Mixture of Action Queries',
