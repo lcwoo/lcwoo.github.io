@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import {
   Container,
@@ -18,7 +19,7 @@ import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import { getPosters } from '../data/posters'
 
-const PosterCard = ({ poster }) => {
+const PosterCard = ({ poster, highlighted }) => {
   const borderColor = useColorModeValue(
     'rgba(15,18,30,0.10)',
     'rgba(255,255,255,0.08)'
@@ -37,7 +38,9 @@ const PosterCard = ({ poster }) => {
       id={poster.id}
       scrollMarginTop="96px"
       border="1px solid"
-      borderColor={borderColor}
+      borderColor={highlighted ? accent : borderColor}
+      boxShadow={highlighted ? `0 0 0 3px ${accent}33` : 'none'}
+      transition="border-color 400ms ease, box-shadow 400ms ease"
       borderRadius="12px"
       overflow="hidden"
     >
@@ -78,53 +81,82 @@ const PosterCard = ({ poster }) => {
   )
 }
 
-const Posters = () => (
-  <Layout title="Posters">
-    <Container maxW="980px" px={0}>
-      <Section>
-        <Box
-          pb={8}
-          mb={8}
-          borderBottom="1px solid"
-          borderColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.200')}
-        >
-          <Badge mb={4}>/posters</Badge>
-          <Heading
-            as="h1"
-            variant="page-title"
-            fontSize={{ base: '3rem', md: '4.2rem' }}
-          >
-            Posters
-          </Heading>
-          <Text
-            mt={4}
-            maxW="680px"
-            color={useColorModeValue('ink.600', 'ink.300')}
-          >
-            Conference posters. Click a poster to open the full PDF.
-          </Text>
-        </Box>
+// Publication cards link here as /posters/#<poster-id>. After the page-transition
+// animation, scroll that poster into view and briefly highlight it.
+const useHashTarget = () => {
+  const [target, setTarget] = useState(null)
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (!id) return undefined
+    const timer = setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setTarget(id)
+    }, 450)
+    const clear = setTimeout(() => setTarget(null), 2600)
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(clear)
+    }
+  }, [])
+  return target
+}
 
-        <VStack spacing={8} align="stretch">
-          {getPosters().map(poster => (
-            <PosterCard key={poster.id} poster={poster} />
-          ))}
-        </VStack>
-      </Section>
+const Posters = () => {
+  const target = useHashTarget()
+  return (
+    <Layout title="Posters">
+      <Container maxW="980px" px={0}>
+        <Section>
+          <Box
+            pb={8}
+            mb={8}
+            borderBottom="1px solid"
+            borderColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.200')}
+          >
+            <Badge mb={4}>/posters</Badge>
+            <Heading
+              as="h1"
+              variant="page-title"
+              fontSize={{ base: '3rem', md: '4.2rem' }}
+            >
+              Posters
+            </Heading>
+            <Text
+              mt={4}
+              maxW="680px"
+              color={useColorModeValue('ink.600', 'ink.300')}
+            >
+              Conference posters. Click a poster to open the full PDF.
+            </Text>
+          </Box>
 
-      <Flex justify="center" mt={10}>
-        <Button
-          as={NextLink}
-          href="/"
-          variant="outline"
-          leftIcon={<ChevronLeftIcon />}
-        >
-          Return to home
-        </Button>
-      </Flex>
-    </Container>
-  </Layout>
-)
+          <VStack spacing={8} align="stretch">
+            {getPosters().map(poster => (
+              <PosterCard
+                key={poster.id}
+                poster={poster}
+                highlighted={target === poster.id}
+              />
+            ))}
+          </VStack>
+        </Section>
+
+        <Flex justify="center" mt={10}>
+          <Button
+            as={NextLink}
+            href="/"
+            variant="outline"
+            leftIcon={<ChevronLeftIcon />}
+          >
+            Return to home
+          </Button>
+        </Flex>
+      </Container>
+    </Layout>
+  )
+}
 
 export default Posters
 export { getStaticProps } from '../components/chakra'
