@@ -57,7 +57,7 @@ const news = [
   {
     date: '2026.10',
     tag: 'accepted',
-    text: 'SARAM, on lifelong robot learning with sparse adapters, was accepted as a poster at the NeurIPS 2026 Robot Learning Workshop.'
+    text: 'SARAM was accepted to the NeurIPS 2026 Robot Learning Workshop.'
   },
   {
     date: '2026',
