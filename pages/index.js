@@ -67,7 +67,7 @@ const allNews = [
     year: '2026',
     month: 'Sep',
     tag: 'accepted',
-    text: 'Our VLA work was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
+    text: 'DILL was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
   },
   {
     year: '2026',
