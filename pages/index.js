@@ -53,46 +53,69 @@ const Scene = dynamic(() => import('../components/scene'), {
   )
 })
 
-const news = [
+// News is grouped by year. The current year stays visible; earlier years go under "old news".
+// `month` is optional; leave it empty when the exact month is not known.
+const CURRENT_NEWS_YEAR = '2026'
+
+const allNews = [
   {
-    date: '2026.10',
+    year: '2026',
+    month: 'Oct',
     tag: 'accepted',
     text: 'SARAM was accepted to the NeurIPS 2026 Robot Learning Workshop.'
   },
   {
-    date: '2026',
+    year: '2026',
+    month: '',
     tag: 'accepted',
     text: 'Our VLA work was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
   },
   {
-    date: '2026',
+    year: '2026',
+    month: '',
     tag: 'accepted',
     text: 'ESPADA was accepted for publication in IEEE RA-L and will be presented at IROS 2026.'
   },
   {
-    date: '2026',
+    year: '2026',
+    month: 'Mar',
     tag: 'milestone',
     text: 'Started my M.S. at Seoul National University (GSAI).'
-  }
-]
-
-const oldNews = [
+  },
   {
-    date: '2025.06',
+    year: '2025',
+    month: 'Jun',
     tag: 'research',
     text: 'Started as a Research Intern at Seoul National University AI Institute in June 2025.'
   },
   {
-    date: '2025.06',
+    year: '2025',
+    month: 'Jun',
     tag: 'research',
     text: 'Joined Tommoro Robotics as an Associate Researcher (June 2025 – January 2026).'
   },
   {
-    date: '2025.02',
+    year: '2025',
+    month: 'Feb',
     tag: 'degree',
     text: 'Graduated in February 2025 with a B.S. in Automotive Engineering from Hanyang University.'
   }
 ]
+
+const groupNewsByYear = items =>
+  items.reduce((groups, item) => {
+    const last = groups[groups.length - 1]
+    if (last && last.year === item.year) last.items.push(item)
+    else groups.push({ year: item.year, items: [item] })
+    return groups
+  }, [])
+
+const newsGroups = groupNewsByYear(
+  allNews.filter(item => item.year === CURRENT_NEWS_YEAR)
+)
+const oldNewsGroups = groupNewsByYear(
+  allNews.filter(item => item.year !== CURRENT_NEWS_YEAR)
+)
 
 const education = [
   {
@@ -359,7 +382,7 @@ const NewsItem = ({ item }) => {
       }}
     >
       <Text fontFamily="mono" fontSize="0.78rem" color="ink.400">
-        {item.date}
+        {item.month}
       </Text>
       <Box
         justifySelf="start"
@@ -383,6 +406,24 @@ const NewsItem = ({ item }) => {
     </Box>
   )
 }
+
+const NewsYearGroup = ({ group }) => (
+  <VStack align="stretch" spacing={2}>
+    <Text
+      fontFamily="mono"
+      fontSize="0.78rem"
+      letterSpacing="0.08em"
+      color="ink.400"
+      px="4px"
+      pt="4px"
+    >
+      {group.year}
+    </Text>
+    {group.items.map(item => (
+      <NewsItem key={`${item.year}-${item.text}`} item={item} />
+    ))}
+  </VStack>
+)
 
 const RectTag = ({ children, tone = 'accent', ...props }) => {
   const accentColor = useColorModeValue('#3B5BFE', '#5EEAD4')
@@ -1137,14 +1178,14 @@ const Home = () => {
               </Button>
             }
           />
-          <VStack align="stretch" spacing={2}>
-            {news.map(item => (
-              <NewsItem key={`${item.date}-${item.text}`} item={item} />
+          <VStack align="stretch" spacing={4}>
+            {newsGroups.map(group => (
+              <NewsYearGroup key={group.year} group={group} />
             ))}
             <Collapse in={showOldNews} animateOpacity>
-              <VStack align="stretch" spacing={2} mt={2}>
-                {oldNews.map(item => (
-                  <NewsItem key={`${item.date}-${item.text}`} item={item} />
+              <VStack align="stretch" spacing={4}>
+                {oldNewsGroups.map(group => (
+                  <NewsYearGroup key={group.year} group={group} />
                 ))}
               </VStack>
             </Collapse>
