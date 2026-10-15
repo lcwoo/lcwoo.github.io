@@ -84,14 +84,43 @@ const Main = ({ children, router }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="Lee Chung-woo's research notebook and homepage"
+          content="Lee Chung-woo, M.S. student in the Interdisciplinary Program in Artificial Intelligence at Seoul National University. Better spatial perception for better embodied action."
         />
         <meta name="author" content="Lee Chung-woo" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <meta property="og:site_name" content="Lee Chung-woo" />
-        <meta name="og:title" content="Lee Chung-woo" />
+        <meta property="og:title" content="Lee Chung-woo" key="og:title" />
+        <meta
+          property="og:description"
+          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. Better spatial perception for better embodied action."
+        />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lcwoo.github.io/" />
+        <meta
+          property="og:image"
+          content="https://lcwoo.github.io/og-image.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+          property="og:image:alt"
+          content="Lee Chung-woo · M.S. Student, Seoul National University"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Lee Chung-woo"
+          key="twitter:title"
+        />
+        <meta
+          name="twitter:description"
+          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. Better spatial perception for better embodied action."
+        />
+        <meta
+          name="twitter:image"
+          content="https://lcwoo.github.io/og-image.png"
+        />
         <title>Lee Chung-woo · Research Notebook</title>
       </Head>
 
