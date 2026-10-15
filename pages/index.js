@@ -462,7 +462,8 @@ const PublicationCard = ({ publication }) => {
   const accent = useColorModeValue('#3B5BFE', '#5EEAD4')
   const actions = [
     ['paper', links.paper],
-    ['project', links.project]
+    ['project', links.project],
+    ['code', links.code]
   ].filter(([, href]) => href)
 
   return (

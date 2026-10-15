@@ -72,7 +72,9 @@ export const publications = [
       }
     ],
     links: {
-      paper: 'https://openreview.net/pdf?id=Y6jslFtt7d'
+      paper: 'https://arxiv.org/abs/2609.37165',
+      project: 'https://dill-vla.github.io/',
+      code: 'https://github.com/DILL-VLA/DILL'
     }
   },
   {
