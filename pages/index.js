@@ -463,7 +463,8 @@ const PublicationCard = ({ publication }) => {
   const actions = [
     ['paper', links.paper],
     ['project', links.project],
-    ['code', links.code]
+    ['code', links.code],
+    ['poster', links.poster]
   ].filter(([, href]) => href)
 
   return (

@@ -34,7 +34,8 @@ export const publications = [
     ],
     links: {
       paper: 'https://www.arxiv.org/pdf/2512.07371',
-      project: 'https://project-espada.github.io/espada/'
+      project: 'https://project-espada.github.io/espada/',
+      poster: '/posters/espada-iros2026-poster.pdf'
     }
   },
   {
@@ -74,7 +75,8 @@ export const publications = [
     links: {
       paper: 'https://arxiv.org/abs/2609.37165',
       project: 'https://dill-vla.github.io/',
-      code: 'https://github.com/DILL-VLA/DILL'
+      code: 'https://github.com/DILL-VLA/DILL',
+      poster: '/posters/dill-corl2026-poster.pdf'
     }
   },
   {
