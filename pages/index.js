@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { SceneContainer } from '../components/scene-loader'
 import NextLink from 'next/link'
 import {
   Link,
@@ -52,6 +53,64 @@ const Scene = dynamic(() => import('../components/scene'), {
     </Box>
   )
 })
+
+// The 3DGS viewer downloads ~11 MB, so it starts only when needed:
+// on desktop when it scrolls near the viewport, on phones when tapped.
+const LazyScene = () => {
+  const [active, setActive] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ref.current || typeof window === 'undefined') return undefined
+    const desktop = window.matchMedia(
+      '(min-width: 768px) and (pointer: fine)'
+    ).matches
+    if (!desktop || !('IntersectionObserver' in window)) return undefined
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setActive(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+
+  if (active) return <Scene />
+
+  return (
+    <Box ref={ref}>
+      <SceneContainer>
+        <Flex h="100%" align="center" justify="center" position="relative">
+          <ChakraImage
+            src="/images/splat-preview.webp"
+            alt="Iron Man 3DGS sample scene preview"
+            h="90%"
+            w="auto"
+            objectFit="contain"
+            opacity={0.85}
+            loading="lazy"
+          />
+          <Button
+            position="absolute"
+            bottom="56px"
+            left="50%"
+            transform="translateX(-50%)"
+            size="sm"
+            onClick={() => setActive(true)}
+            zIndex={4}
+          >
+            load interactive 3D · 11 MB
+          </Button>
+        </Flex>
+      </SceneContainer>
+    </Box>
+  )
+}
 
 // News is grouped by year. The current year stays visible; earlier years go under "old news".
 // `month` is optional; leave it empty when the exact month is not known.
@@ -841,7 +900,7 @@ const Home = () => {
     <Layout>
       <Script
         id="mapmyvisitors-loader"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             (function () {
@@ -1049,7 +1108,7 @@ const Home = () => {
               mb={{ base: 5, md: 0 }}
             >
               <ChakraImage
-                src="/images/chungwoo.jpg"
+                src="/images/chungwoo.webp"
                 alt="Lee Chung-woo"
                 w="100%"
                 h="100%"
@@ -1235,7 +1294,7 @@ const Home = () => {
             Interactive 3DGS viewer using a sample scene. This viewer is a
             visualization sandbox, not a research result.
           </Text>
-          <Scene />
+          <LazyScene />
         </Section>
 
         <Section id="experience" delay={0.18}>

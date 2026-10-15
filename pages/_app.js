@@ -3,7 +3,6 @@ import Layout from '../components/layouts/main'
 import Fonts from '../components/fonts'
 import { AnimatePresence } from 'framer-motion'
 import Chakra from '../components/chakra'
-import Payhip from '../components/payhip'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import 'prism-themes/themes/prism-vsc-dark-plus.css'
 
@@ -15,11 +14,10 @@ function Website({ Component, pageProps, router }) {
   return (
     <Chakra cookies={pageProps.cookies}>
       <Fonts />
-      <Payhip />
       <Layout router={router}>
         <AnimatePresence
           mode="wait"
-          initial={true}
+          initial={false}
           onExitComplete={() => {
             if (typeof window !== 'undefined') {
               window.scrollTo({ top: 0 })

@@ -8,6 +8,7 @@ export const publications = [
     title:
       'ESPADA: Execution Speedup via Semantics Aware Demonstration Data Downsampling for Imitation Learning',
     image: '/images/publications/espada-overview.png',
+    thumbnail: '/images/publications/espada-overview-thumb.webp',
     thumbnailScale: 1,
     thumbnailPosition: 'center',
     authors: [
@@ -48,6 +49,7 @@ export const publications = [
     title:
       'Disentangling Spurious Correlations in Vision-Language-Action Models via Predicting Domain-Invariant Latent Lookahead',
     image: '/images/publications/lookahead-overview.png',
+    thumbnail: '/images/publications/lookahead-overview-thumb.webp',
     thumbnailScale: 1,
     thumbnailPosition: 'center',
     authors: [
@@ -90,6 +92,7 @@ export const publications = [
     title:
       'SARAM: Sparse Adapter Allocation with Reuse and Merging for Lifelong Robot Learning',
     image: '/images/publications/saram-overview.png',
+    thumbnail: '/images/publications/saram-overview-thumb.webp',
     thumbnailScale: 1,
     thumbnailPosition: 'center',
     authors: [
@@ -123,6 +126,7 @@ export const publications = [
     month: 6,
     title: 'Making Your Action Policies Interpretable: Mixture of Action Queries',
     image: '/images/publications/moaq-overview.png',
+    thumbnail: '/images/publications/moaq-overview-thumb.webp',
     thumbnailScale: 1,
     thumbnailPosition: 'center',
     authors: [
