@@ -31,6 +31,7 @@ import { getPublications } from '../data/publications'
 import {
   IoMailUnread,
   IoLogoLinkedin,
+  IoSchool,
   IoLogoGithub,
   IoLocationSharp,
   IoDocumentText
@@ -204,6 +205,13 @@ const contactLinks = [
     shortLabel: 'linkedin',
     href: 'https://www.linkedin.com/in/chungwoo-lee',
     icon: IoLogoLinkedin,
+    external: true
+  },
+  {
+    label: 'Google Scholar',
+    shortLabel: 'scholar',
+    href: 'https://scholar.google.com/citations?user=vZd6tSEAAAAJ',
+    icon: IoSchool,
     external: true
   }
 ]
@@ -1138,6 +1146,15 @@ const Home = () => {
                 leftIcon={<IoLogoLinkedin />}
               >
                 linkedin
+              </Button>
+              <Button
+                as={Link}
+                href="https://scholar.google.com/citations?user=vZd6tSEAAAAJ"
+                isExternal
+                variant="outline"
+                leftIcon={<IoSchool />}
+              >
+                scholar
               </Button>
             </Stack>
           </Box>
