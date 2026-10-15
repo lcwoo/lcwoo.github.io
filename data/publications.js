@@ -1,6 +1,7 @@
 export const publications = [
   {
     id: 'espada',
+    type: 'journal',
     sortOrder: 1,
     year: 2026,
     month: null,
@@ -40,6 +41,7 @@ export const publications = [
   },
   {
     id: 'latent-lookahead',
+    type: 'conference',
     sortOrder: 2,
     year: 2026,
     month: null,
@@ -81,6 +83,7 @@ export const publications = [
   },
   {
     id: 'saram',
+    type: 'workshop',
     sortOrder: 3,
     year: 2026,
     month: 10,
@@ -114,6 +117,7 @@ export const publications = [
   },
   {
     id: 'moaq',
+    type: 'workshop',
     sortOrder: 4,
     year: 2026,
     month: 6,

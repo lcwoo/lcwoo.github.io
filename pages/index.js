@@ -1290,20 +1290,19 @@ const Home = () => {
           </Card>
         </Section>
 
-        <Section id="visitors" delay={0.3}>
-          <SectionHead index="07" title="Visitors" />
-          <Card p={{ base: 3, md: 5 }}>
-            <Box
-              id="map-area"
-              w="100%"
-              maxW="800px"
-              mx="auto"
-              minH="300px"
-              borderRadius="18px"
-              overflow="hidden"
-            />
-          </Card>
-        </Section>
+        {/* Visitor map is hidden from the page; the MapMyVisitors script still
+            loads here so visits keep being counted on the owner's dashboard. */}
+        <Box
+          id="map-area"
+          aria-hidden="true"
+          position="absolute"
+          left="-10000px"
+          top="0"
+          w="800px"
+          h="300px"
+          overflow="hidden"
+          pointerEvents="none"
+        />
       </Container>
     </Layout>
   )

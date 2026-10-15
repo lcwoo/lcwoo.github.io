@@ -17,13 +17,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import Layout from '../components/layouts/article'
 
 const posts = [
-  {
-    title: 'Research_summary',
-    href: '/posts/research-summary',
-    summary:
-      'Summary of projects and research conducted during my undergraduate studies.',
-    pinned: true
-  }
+  // Hidden: undergraduate research summary (2025.04). Uncomment to list it again.
+  // {
+  //   title: 'Research_summary',
+  //   href: '/posts/research-summary',
+  //   summary:
+  //     'Summary of projects and research conducted during my undergraduate studies.',
+  //   pinned: true
+  // }
 
   // Add future posts in this format.
   // {
