@@ -33,7 +33,6 @@ import {
   IoLogoLinkedin,
   IoLogoGithub,
   IoLocationSharp,
-  IoFlask,
   IoDocumentText
 } from 'react-icons/io5'
 import Script from 'next/script'
@@ -66,13 +65,13 @@ const allNews = [
   },
   {
     year: '2026',
-    month: '',
+    month: 'Sep',
     tag: 'accepted',
     text: 'Our VLA work was accepted to CoRL 2026 and selected for an RSS SemRob Spotlight.'
   },
   {
     year: '2026',
-    month: '',
+    month: 'May',
     tag: 'accepted',
     text: 'ESPADA was accepted for publication in IEEE RA-L and will be presented at IROS 2026.'
   },
@@ -1071,7 +1070,9 @@ const Home = () => {
               Better spatial perception for better embodied action.
             </Text>
             <HStack mt={4} color={muted} fontFamily="mono" fontSize="sm">
-              <IoFlask color={accent} />
+              <Text as="span" role="img" aria-label="robot" fontSize="1rem">
+                🤖
+              </Text>
               <Link href="https://gsai.snu.ac.kr/" isExternal color="inherit">
                 Seoul National University · GSAI
               </Link>
