@@ -96,16 +96,22 @@ const oldNews = [
 
 const education = [
   {
-    date: '2026 – Present',
-    school: 'Seoul National University',
-    degree: 'M.S., Interdisciplinary Program in Artificial Intelligence',
-    note: 'Advised by Prof. Byoung-Tak Zhang. Expected graduation: February 2028.'
+    date: '2019',
+    school: 'Boin High School',
+    degree: 'High School',
+    note: 'Completed secondary education.'
   },
   {
     date: '2025',
     school: 'Hanyang University',
     degree: 'B.S., Dept. of Automotive Engineering',
     note: 'Bachelor of Science in Automotive Engineering.'
+  },
+  {
+    date: '2026 – Present',
+    school: 'Seoul National University',
+    degree: 'M.S., Interdisciplinary Program in Artificial Intelligence',
+    note: 'Advised by Prof. Byoung-Tak Zhang. Expected graduation: February 2028.'
   }
 ]
 
