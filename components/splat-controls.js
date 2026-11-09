@@ -6,7 +6,6 @@ import {
   SliderThumb,
   Switch,
   Text,
-  VStack,
   useColorModeValue
 } from '@chakra-ui/react'
 
@@ -38,10 +37,10 @@ const ParamRow = ({ label, value, format, children }) => {
   return (
     <Box w="100%">
       <Box display="flex" justifyContent="space-between" mb={1}>
-        <Text fontSize="0.68rem" fontFamily="mono" color={labelColor} letterSpacing="0.06em">
+        <Text fontSize="xs" fontFamily="mono" color={labelColor}>
           {label}
         </Text>
-        <Text fontSize="0.68rem" fontFamily="mono" color={muted}>
+        <Text fontSize="xs" fontFamily="mono" color={muted}>
           {format(value)}
         </Text>
       </Box>
@@ -51,37 +50,29 @@ const ParamRow = ({ label, value, format, children }) => {
 }
 
 const SplatControls = ({ params, onChange }) => {
-  const panelBg = useColorModeValue('rgba(250,250,252,0.88)', 'rgba(11,12,16,0.82)')
-  const panelBorder = useColorModeValue(
-    'rgba(15,18,30,0.12)',
-    'rgba(255,255,255,0.10)'
+  const trackBg = useColorModeValue(
+    'rgba(15,18,30,0.10)',
+    'rgba(255,255,255,0.12)'
   )
-  const trackBg = useColorModeValue('rgba(15,18,30,0.10)', 'rgba(255,255,255,0.12)')
 
   const set = (key, value) => onChange({ ...params, [key]: value })
 
   return (
-    <Box
-      display={{ base: 'none', md: 'block' }}
-      position="absolute"
-      top="12px"
-      right="12px"
-      zIndex={5}
-      w={{ base: 'min(220px, calc(100% - 24px))', md: '200px' }}
-      px="12px"
-      py="10px"
-      bg={panelBg}
-      border="1px solid"
-      borderColor={panelBorder}
-      borderRadius="12px"
-      backdropFilter="blur(10px)"
-      pointerEvents="auto"
-      onPointerDown={e => e.stopPropagation()}
-    >
-      <VStack spacing={3} align="stretch">
-        <ParamRow label="alpha" value={params.opacity} format={v => v.toFixed(2)}>
+    <Box w="100%" minW={0} onPointerDown={e => e.stopPropagation()}>
+      <Box
+        display="grid"
+        gridTemplateColumns="minmax(0, 1fr) auto"
+        gap={6}
+        alignItems="center"
+      >
+        <ParamRow
+          label="Opacity"
+          value={params.opacity}
+          format={v => v.toFixed(2)}
+        >
           <Slider
             aria-label="Scene opacity"
+            minH="32px"
             min={0.05}
             max={1}
             step={0.01}
@@ -92,22 +83,34 @@ const SplatControls = ({ params, onChange }) => {
             <SliderTrack bg={trackBg} h="4px" borderRadius="full">
               <SliderFilledTrack bg="brand.400" />
             </SliderTrack>
-            <SliderThumb boxSize="12px" />
+            <SliderThumb
+              boxSize="16px"
+              _before={{ content: '""', position: 'absolute', inset: '-14px' }}
+            />
           </Slider>
         </ParamRow>
 
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Text fontSize="0.68rem" fontFamily="mono" letterSpacing="0.06em">
-            point cloud
+        <Box
+          as="label"
+          htmlFor="gs-point-cloud-toggle"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          minH="44px"
+          cursor="pointer"
+        >
+          <Text fontSize="xs" fontFamily="mono">
+            Point cloud
           </Text>
           <Switch
+            id="gs-point-cloud-toggle"
             size="sm"
             colorScheme="teal"
             isChecked={params.pointCloud}
             onChange={e => set('pointCloud', e.target.checked)}
           />
         </Box>
-      </VStack>
+      </Box>
     </Box>
   )
 }

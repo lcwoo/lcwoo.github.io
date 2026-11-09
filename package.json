@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "keywords": [],
-  "author": "Lee Chung-woo",
+  "author": "Chungwoo Lee",
   "license": "MIT",
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",

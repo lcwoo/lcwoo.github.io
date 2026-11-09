@@ -5,7 +5,11 @@ import SplatControls, {
   DEFAULT_SPLAT_PARAMS,
   applySplatParams
 } from './splat-controls'
-import { setupTorsoOrbit } from '../lib/splat-orbit'
+import {
+  setupTorsoOrbit,
+  frameTorsoCamera,
+  computeTorsoPivot
+} from '../lib/splat-orbit'
 
 const SPLAT_PATH = '/iron_man_best.ksplat'
 
@@ -48,6 +52,9 @@ const Scene = () => {
     let cancelled = false
     let activeViewer = null
     let pendingViewer = null
+    let resizeObserver = null
+    let resizeFrame = null
+    let lastAspect = null
 
     const boot = async () => {
       await disposeChain
@@ -88,7 +95,28 @@ const Scene = () => {
         }
 
         pendingViewer = null
-        setupTorsoOrbit(viewer)
+        const bounds = setupTorsoOrbit(viewer)
+        const mount = refContainer.current
+        const fitToViewport = () => {
+          if (cancelled || !mount || !viewer.camera) return
+          const { width, height } = mount.getBoundingClientRect()
+          if (!width || !height) return
+          const aspect = width / height
+          if (lastAspect !== null && Math.abs(aspect - lastAspect) < 0.01)
+            return
+          lastAspect = aspect
+          viewer.camera.aspect = aspect
+          viewer.camera.updateProjectionMatrix()
+          frameTorsoCamera(viewer, computeTorsoPivot(bounds), bounds)
+        }
+        fitToViewport()
+        if (typeof ResizeObserver !== 'undefined') {
+          resizeObserver = new ResizeObserver(() => {
+            if (resizeFrame !== null) cancelAnimationFrame(resizeFrame)
+            resizeFrame = requestAnimationFrame(fitToViewport)
+          })
+          resizeObserver.observe(mount)
+        }
         applySplatParams(viewer, paramsRef.current)
         viewer.start()
         viewerRef.current = viewer
@@ -96,6 +124,8 @@ const Scene = () => {
         setReady(true)
         return viewer
       } catch (loadError) {
+        resizeObserver?.disconnect()
+        if (resizeFrame !== null) cancelAnimationFrame(resizeFrame)
         console.error('Failed to load Gaussian splat scene:', loadError)
         await disposeViewer(viewer)
         pendingViewer = null
@@ -107,12 +137,22 @@ const Scene = () => {
       }
     }
 
-    const bootPromise = boot().then(viewer => {
-      activeViewer = viewer
-    })
+    const bootPromise = boot()
+      .then(viewer => {
+        activeViewer = viewer
+      })
+      .catch(bootError => {
+        console.error('Failed to initialize Gaussian splat viewer:', bootError)
+        if (!cancelled) {
+          setError(true)
+          setLoading(false)
+        }
+      })
 
     return () => {
       cancelled = true
+      resizeObserver?.disconnect()
+      if (resizeFrame !== null) cancelAnimationFrame(resizeFrame)
       setReady(false)
       viewerRef.current = null
       disposeChain = Promise.all([disposeChain, bootPromise])
@@ -129,15 +169,23 @@ const Scene = () => {
   }, [])
 
   return (
-    <SceneContainer>
+    <SceneContainer
+      controls={
+        ready ? (
+          <SplatControls params={params} onChange={handleParamsChange} />
+        ) : null
+      }
+    >
       <div
         ref={refContainer}
         className="voxel-dog"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%'
+        }}
       />
-      {ready && (
-        <SplatControls params={params} onChange={handleParamsChange} />
-      )}
       {loading && <SceneSpinner />}
       {error && (
         <div
@@ -147,13 +195,15 @@ const Scene = () => {
             display: 'grid',
             placeItems: 'center',
             fontFamily: 'JetBrains Mono, monospace',
-            fontSize: '0.76rem',
+            fontSize: '0.8125rem',
+            padding: '24px',
+            textAlign: 'center',
             color: '#ff6b6b',
             zIndex: 4,
             pointerEvents: 'none'
           }}
         >
-          failed to load iron_man_best.ksplat
+          The 3D scene could not be loaded. Please refresh and try again.
         </div>
       )}
     </SceneContainer>

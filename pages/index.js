@@ -11,18 +11,11 @@ import {
   Collapse,
   Text,
   Image as ChakraImage,
-  VStack,
   HStack,
-  Stack,
-  Badge,
   Flex,
   useColorModeValue
 } from '@chakra-ui/react'
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  ChevronUpIcon
-} from '@chakra-ui/icons'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import Paragraph from '../components/paragraph'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
@@ -33,11 +26,10 @@ import {
   IoMailUnread,
   IoLogoLinkedin,
   IoSchool,
-  IoLogoGithub,
-  IoLocationSharp,
-  IoDocumentText
+  IoLogoGithub
 } from 'react-icons/io5'
 import Script from 'next/script'
+import styles from '../components/home-folio.module.css'
 
 const Scene = dynamic(() => import('../components/scene'), {
   ssr: false,
@@ -99,17 +91,27 @@ const LazyScene = () => {
             objectFit="contain"
             opacity={0.85}
           />
-          <Button
+          <Flex
             position="absolute"
-            bottom="56px"
-            left="50%"
-            transform="translateX(-50%)"
-            size="sm"
-            onClick={() => setActive(true)}
+            bottom="24px"
+            left={4}
+            right={4}
+            justify="center"
             zIndex={4}
           >
-            load interactive 3D · 11 MB
-          </Button>
+            <Button
+              size="sm"
+              w="100%"
+              maxW="280px"
+              minH="44px"
+              boxShadow="none"
+              whiteSpace="normal"
+              onClick={() => setActive(true)}
+              zIndex={4}
+            >
+              Load interactive 3D · 11 MB
+            </Button>
+          </Flex>
         </Flex>
       </SceneContainer>
     </Box>
@@ -183,18 +185,21 @@ const oldNewsGroups = groupNewsByYear(
 const education = [
   {
     date: '2019',
+    initials: 'BH',
     school: 'Boin High School',
     degree: 'High School',
     note: 'Completed secondary education.'
   },
   {
     date: '2025',
+    initials: 'HYU',
     school: 'Hanyang University',
     degree: 'B.S., Dept. of Automotive Engineering',
     note: 'Bachelor of Science in Automotive Engineering.'
   },
   {
     date: '2026 – Present',
+    initials: 'SNU',
     school: 'Seoul National University',
     degree: 'M.S., Interdisciplinary Program in Artificial Intelligence',
     note: 'Advised by Prof. Byoung-Tak Zhang. Expected graduation: February 2028.'
@@ -226,7 +231,9 @@ const experience = [
     role: 'Associate Researcher',
     org: 'Tommoro Robotics',
     url: 'https://tommoro.ai/',
-    notes: ['Worked on robotics research and development as an associate researcher.']
+    notes: [
+      'Worked on robotics research and development as an associate researcher.'
+    ]
   },
   {
     period: '2023.08 – 2024.09',
@@ -242,11 +249,7 @@ const experience = [
   }
 ]
 
-const interests = [
-  'Embodied AI',
-  'Machine Learning',
-  'Robot Learning'
-]
+const interests = ['Embodied AI', 'Machine Learning', 'Robot Learning']
 
 const contactLinks = [
   {
@@ -279,292 +282,75 @@ const contactLinks = [
   }
 ]
 
-const Kbd = ({ children }) => (
-  <Box
-    as="span"
-    display="inline-flex"
-    alignItems="center"
-    px="7px"
-    py="2px"
-    border="1px solid"
-    borderColor={useColorModeValue(
-      'rgba(15,18,30,0.10)',
-      'rgba(255,255,255,0.08)'
-    )}
-    borderRadius="4px"
-    bg={useColorModeValue('rgba(15,18,30,0.035)', 'rgba(255,255,255,0.035)')}
-    color={useColorModeValue('ink.500', 'ink.400')}
-    fontFamily="mono"
-    fontSize="0.68rem"
-    letterSpacing="0.08em"
-    textTransform="uppercase"
-  >
-    {children}
+const SectionHead = ({ index, title, extra }) => (
+  <Box className={styles.sectionHeading}>
+    <Text className={styles.sectionIndex}>{index} /</Text>
+    <Heading
+      as="h2"
+      fontSize="1.5rem"
+      fontWeight={500}
+      letterSpacing="-0.035em"
+    >
+      {title}
+    </Heading>
+    {extra && <Box mt={4}>{extra}</Box>}
   </Box>
 )
 
-const StatusDot = ({ pulse = false }) => {
-  const dotColor = useColorModeValue('brand.600', 'brand.300')
-  const pulseShadow = useColorModeValue(
-    '0 0 0 6px rgba(20,184,166,0.12)',
-    '0 0 0 7px rgba(94,234,212,0.12)'
-  )
-
-  return (
-    <Box
-      as="span"
-      w="7px"
-      h="7px"
-      borderRadius="full"
-      bg={dotColor}
-      boxShadow={pulse ? pulseShadow : 'none'}
-    />
-  )
-}
-
-const SectionHead = ({ index, title, extra }) => {
-  const ruleColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const accent = useColorModeValue('brand.600', 'brand.300')
-
-  return (
-    <Flex align="baseline" gap="16px" mb="36px">
-      <Text
-        fontFamily="mono"
-        fontSize="0.78rem"
-        color={accent}
-        letterSpacing="0.1em"
-      >
-        {index}
-      </Text>
-      <Heading as="h2" variant="section-title">
-        {title}
-      </Heading>
-      <Box flex={1} h="1px" bg={ruleColor} mb={1.5} />
-      {extra}
-    </Flex>
-  )
-}
-
-const Card = ({ children, hover = true, ...props }) => {
-  const borderColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const hoverBorder = useColorModeValue(
-    'rgba(15,18,30,0.22)',
-    'rgba(255,255,255,0.18)'
-  )
-  const surface = useColorModeValue(
-    'rgba(15,18,30,0.035)',
-    'rgba(255,255,255,0.035)'
-  )
-  const strongSurface = useColorModeValue(
-    'rgba(15,18,30,0.07)',
-    'rgba(255,255,255,0.065)'
-  )
-  const shadow = useColorModeValue(
-    '0 1px 0 rgba(255,255,255,0.6) inset, 0 8px 24px -16px rgba(15,18,30,0.25)',
-    '0 1px 0 rgba(255,255,255,0.03) inset, 0 10px 30px -14px rgba(0,0,0,0.55)'
-  )
-
-  return (
-    <Box
-      bg={surface}
-      border="1px solid"
-      borderColor={borderColor}
-      borderRadius="18px"
-      boxShadow={shadow}
-      transition="border-color 220ms ease, background 220ms ease, transform 220ms ease"
-      _hover={
-        hover
-          ? {
-              borderColor: hoverBorder,
-              bg: strongSurface
-            }
-          : undefined
-      }
-      {...props}
-    >
-      {children}
-    </Box>
-  )
-}
-
-const ChipRow = ({ label, items }) => {
-  const labelColor = useColorModeValue('ink.400', 'ink.500')
-
-  return (
-    <Flex align="center" gap="8px" flexWrap="wrap" mt="24px">
-      <Text
-        fontFamily="mono"
-        fontSize="0.68rem"
-        textTransform="uppercase"
-        letterSpacing="0.1em"
-        color={labelColor}
-        mr={1}
-      >
-        {label}
-      </Text>
-      {items.map(item => (
-        <Badge key={item}>{item}</Badge>
-      ))}
-    </Flex>
-  )
-}
-
-const NewsItem = ({ item }) => {
-  const borderColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const hoverBorder = useColorModeValue('#3B5BFE', '#5EEAD4')
-  const warnColor = useColorModeValue('#B97A1B', '#E0B062')
-  const defaultTagColor = useColorModeValue('#3B5BFE', '#5EEAD4')
-  const hoverBg = useColorModeValue(
-    'rgba(15,18,30,0.035)',
-    'rgba(255,255,255,0.035)'
-  )
-  const textColor = useColorModeValue('ink.700', 'ink.200')
-  const accentSoft = useColorModeValue(
-    'rgba(59,91,254,0.10)',
-    'rgba(94,234,212,0.14)'
-  )
-  const tagColor = item.tag === 'degree' ? warnColor : defaultTagColor
-
-  return (
-    <Box
-      display="grid"
-      gridTemplateColumns={{ base: '1fr', md: '80px 110px 1fr' }}
-      gap={{ base: '4px', md: '16px' }}
-      alignItems="baseline"
-      px="18px"
-      py="13px"
-      border="1px solid"
-      borderColor={borderColor}
-      borderRadius="12px"
-      transition="border-color 220ms ease, background 220ms ease"
-      _hover={{
-        borderColor: hoverBorder,
-        bg: hoverBg
-      }}
-    >
-      <Text fontFamily="mono" fontSize="0.78rem" color="ink.400">
-        {item.month}
-      </Text>
-      <Box
-        justifySelf="start"
-        fontFamily="mono"
-        fontSize="0.66rem"
-        letterSpacing="0.1em"
-        textTransform="uppercase"
-        px="9px"
-        py="3px"
-        borderRadius="4px"
-        border="1px solid"
-        borderColor={tagColor}
-        color={tagColor}
-        bg={item.tag === 'degree' ? 'transparent' : accentSoft}
-      >
-        {item.tag}
-      </Box>
-      <Text color={textColor} fontSize="0.94rem">
-        {item.text}
-      </Text>
-    </Box>
-  )
-}
+const NewsItem = ({ item }) => (
+  <Box className={styles.newsRow}>
+    <Text className={styles.mutedMeta}>{item.month || '—'}</Text>
+    <Text className={styles.newsTag}>{item.tag}</Text>
+    <Text className={styles.newsText}>{item.text}</Text>
+  </Box>
+)
 
 const NewsYearGroup = ({ group }) => (
-  <VStack align="stretch" spacing={2}>
-    <Text
-      fontFamily="mono"
-      fontSize="0.78rem"
-      letterSpacing="0.08em"
-      color="ink.400"
-      px="4px"
-      pt="4px"
-    >
-      {group.year}
-    </Text>
+  <Box>
+    <Text className={styles.yearLabel}>{group.year}</Text>
     {group.items.map(item => (
       <NewsItem key={`${item.year}-${item.text}`} item={item} />
     ))}
-  </VStack>
+  </Box>
 )
-
-const RectTag = ({ children, tone = 'accent', ...props }) => {
-  const accentColor = useColorModeValue('#3B5BFE', '#5EEAD4')
-  const warnColor = useColorModeValue('#B97A1B', '#E0B062')
-  const subtleColor = useColorModeValue('ink.500', 'ink.400')
-  const accentBg = useColorModeValue(
-    'rgba(59,91,254,0.10)',
-    'rgba(94,234,212,0.14)'
-  )
-  const color =
-    tone === 'warn' ? warnColor : tone === 'subtle' ? subtleColor : accentColor
-
-  return (
-    <Box
-      as="span"
-      display="inline-flex"
-      alignItems="center"
-      fontFamily="mono"
-      fontSize="0.7rem"
-      letterSpacing="0.1em"
-      textTransform="uppercase"
-      color={color}
-      px="9px"
-      py="3px"
-      border="1px solid"
-      borderColor={color}
-      borderRadius="4px"
-      bg={tone === 'accent' ? accentBg : 'transparent'}
-      {...props}
-    >
-      {children}
-    </Box>
-  )
-}
 
 const HomeVenueTag = ({ children, primary = false, href }) => {
   const accentColor = useColorModeValue('#3B5BFE', '#5EEAD4')
   const mutedColor = useColorModeValue('ink.500', 'ink.400')
-  const accentBg = useColorModeValue(
-    'rgba(59,91,254,0.08)',
-    'rgba(94,234,212,0.10)'
-  )
   const color = primary ? accentColor : mutedColor
 
   return (
     <Box
       as={href ? Link : 'span'}
       href={href}
-      isExternal={Boolean(href)}
+      {...(href ? { isExternal: true } : {})}
       display="inline-flex"
       alignItems="center"
+      gap="6px"
       fontFamily="mono"
-      fontSize="0.62rem"
-      letterSpacing="0.04em"
+      fontSize="0.75rem"
+      letterSpacing="0.01em"
       color={color}
-      px="6px"
-      py="1px"
-      border="1px solid"
-      borderColor={color}
-      borderRadius="3px"
-      bg={primary ? accentBg : 'transparent'}
       lineHeight={1.4}
       whiteSpace="nowrap"
       _hover={href ? { opacity: 0.72, textDecoration: 'none' } : undefined}
     >
+      {primary && (
+        <Box
+          aria-hidden="true"
+          w="5px"
+          h="5px"
+          borderRadius="full"
+          bg={accentColor}
+          flexShrink={0}
+        />
+      )}
       {children}
     </Box>
   )
 }
 
-const PublicationCard = ({ publication }) => {
+const PublicationCard = ({ publication, featured = false }) => {
   const { title, authors, venues, links = {} } = publication
   const borderColor = useColorModeValue(
     'rgba(15,18,30,0.10)',
@@ -580,19 +366,21 @@ const PublicationCard = ({ publication }) => {
 
   return (
     <Box
-      p={{ base: '10px 12px', md: '12px 14px' }}
-      border="1px solid"
+      className={styles.publicationRow}
+      borderBottom="1px solid"
       borderColor={borderColor}
-      borderRadius="12px"
     >
       <Flex
         direction={{ base: 'column', md: 'row' }}
         align="start"
-        gap={{ base: '10px', md: '14px' }}
+        gap={{ base: 5, md: 7 }}
       >
-        <PublicationThumbnail publication={publication} size="home" />
+        <PublicationThumbnail
+          publication={publication}
+          size={featured ? 'featured' : 'home'}
+        />
         <Box minW={0} flex={1}>
-          <Flex gap="6px" flexWrap="wrap" mb="6px">
+          <Flex gap="12px" flexWrap="wrap" mb="6px">
             {venues.map(venue => (
               <HomeVenueTag
                 key={venue.homeLabel}
@@ -605,8 +393,8 @@ const PublicationCard = ({ publication }) => {
           </Flex>
           <Heading
             as="h3"
-            fontSize="0.95rem"
-            fontWeight={600}
+            fontSize={{ base: '1rem', md: featured ? '1.125rem' : '1rem' }}
+            fontWeight={500}
             lineHeight={1.35}
           >
             {title}
@@ -644,261 +432,78 @@ const PublicationCard = ({ publication }) => {
   )
 }
 
-const TimelineItem = ({ item, accent }) => {
-  const bgColor = useColorModeValue('#FAFAFC', '#0B0C10')
-  const orgColor = useColorModeValue('ink.500', 'ink.400')
-  const noteColor = useColorModeValue('ink.700', 'ink.200')
-
-  return (
-    <Box as="li" position="relative" pl={9} mb={7}>
+const Timeline = ({ items }) => (
+  <Box as="ol" m={0} p={0} listStyleType="none">
+    {items.map(item => (
       <Box
-        position="absolute"
-        left={0}
-        top="4px"
-        w="15px"
-        h="15px"
-        borderRadius="full"
-        bg={bgColor}
-        border="1.5px solid"
-        borderColor={accent}
-        boxShadow={`0 0 0 3px ${bgColor}`}
-      />
-      <Text fontFamily="mono" fontSize="xs" color={accent} mb={1}>
-        {item.period}
-      </Text>
-      <Heading as="h3" fontSize="lg" fontWeight={500}>
-        {item.role}
-      </Heading>
-      <Text color={orgColor} fontSize="sm">
-        {item.url ? (
-          <Link href={item.url} isExternal>
-            {item.org}
-          </Link>
-        ) : (
-          item.org
-        )}
-      </Text>
-      <VStack as="ul" align="stretch" spacing={1} mt={3} pl={0}>
-        {item.notes.map(note => (
-          <Text
-            as="li"
-            key={note}
-            listStyleType="none"
-            position="relative"
-            pl={5}
-            fontSize="sm"
-            color={noteColor}
-            _before={{
-              content: '"›"',
-              position: 'absolute',
-              left: 0,
-              color: accent,
-              fontFamily: 'mono'
-            }}
-          >
-            {note}
+        as="li"
+        className={styles.careerRow}
+        key={`${item.period}-${item.role}`}
+      >
+        <Text className={styles.mutedMeta}>{item.period}</Text>
+        <Box>
+          <Heading as="h3" fontSize="1.1rem" fontWeight={500} mb={2}>
+            {item.role}
+          </Heading>
+          <Text fontSize="sm" mb={3}>
+            {item.url ? (
+              <Link href={item.url} isExternal>
+                {item.org}
+              </Link>
+            ) : (
+              item.org
+            )}
           </Text>
-        ))}
-      </VStack>
-    </Box>
-  )
-}
-
-const Timeline = ({ items }) => {
-  const lineColor = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
-  const accent = useColorModeValue('brand.600', 'brand.300')
-
-  return (
-    <Box as="ol" listStyleType="none" m={0} p={0} position="relative">
-      <Box
-        position="absolute"
-        top="6px"
-        bottom="6px"
-        left="8px"
-        w="1px"
-        bg={`linear-gradient(to bottom, ${accent}, ${lineColor} 80%)`}
-      />
-      {items.map(item => (
-        <TimelineItem
-          key={`${item.period}-${item.role}`}
-          item={item}
-          accent={accent}
-        />
-      ))}
-    </Box>
-  )
-}
-
-const EducationLine = ({ items }) => {
-  const borderColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const strongBorder = useColorModeValue(
-    'rgba(15,18,30,0.22)',
-    'rgba(255,255,255,0.18)'
-  )
-  const accent = useColorModeValue('brand.600', 'brand.300')
-  const bgColor = useColorModeValue('#FAFAFC', '#0B0C10')
-  const popBg = useColorModeValue('#F2F3F7', '#111319')
-  const degreeColor = useColorModeValue('ink.700', 'ink.200')
-  const muted = useColorModeValue('ink.500', 'ink.400')
-  const accentSoft = useColorModeValue(
-    'rgba(59,91,254,0.10)',
-    'rgba(94,234,212,0.14)'
-  )
-  const popShadow = useColorModeValue(
-    '0 1px 0 rgba(255,255,255,0.7) inset, 0 24px 60px -30px rgba(15,18,30,0.30)',
-    '0 1px 0 rgba(255,255,255,0.05) inset, 0 28px 70px -24px rgba(0,0,0,0.65)'
-  )
-  const headingColor = useColorModeValue('ink.900', 'ink.50')
-
-  return (
-    <Box>
-      <Flex
-        position="relative"
-        justify="space-between"
-        align={{ base: 'stretch', md: 'flex-start' }}
-        direction={{ base: 'column', md: 'row' }}
-        gap={{ base: '28px', md: '16px' }}
-        pt={{ base: 4, md: '56px' }}
-        px={{ base: 0, md: 2 }}
-        pb={{ base: 4, md: '28px' }}
-        maxW="880px"
-        mx="auto"
-      >
-        <Box
-          display={{ base: 'none', md: 'block' }}
-          position="absolute"
-          top="70px"
-          left="8%"
-          right="8%"
-          h="1px"
-          bg={`linear-gradient(to right, ${borderColor}, ${accent} 50%, ${borderColor})`}
-        />
-        {items.map(item => (
-          <Flex
-            key={`${item.date}-${item.school}`}
-            role="group"
-            tabIndex={0}
-            position="relative"
-            flex={1}
-            direction={{ base: 'row', md: 'column' }}
-            align={{ base: 'center', md: 'center' }}
-            gap={{ base: '14px', md: 0 }}
-            outline="none"
-          >
-            <Box
-              w="16px"
-              h="16px"
-              borderRadius="full"
-              bg={bgColor}
-              border="1.5px solid"
-              borderColor={accent}
-              boxShadow={`0 0 0 4px ${bgColor}`}
-              transition="transform 220ms ease, background 220ms ease, box-shadow 220ms ease"
-              _groupHover={{
-                transform: 'scale(1.2)',
-                bg: accent,
-                boxShadow: `0 0 0 4px ${bgColor}, 0 0 16px ${accentSoft}`
-              }}
-            />
+          {item.notes.map(note => (
             <Text
-              mt={{ base: 0, md: '14px' }}
-              fontFamily="mono"
-              fontSize="0.78rem"
-              color={muted}
-              letterSpacing="0.02em"
-              minW={{ base: '72px', md: 'auto' }}
+              key={note}
+              className={styles.secondaryText}
+              fontSize="sm"
+              lineHeight={1.7}
             >
-              {item.date}
+              {note}
             </Text>
-            <Box
-              position={{ base: 'static', md: 'absolute' }}
-              bottom={{ md: 'calc(100% + 14px)' }}
-              left={{ md: '50%' }}
-              transform={{ base: 'none', md: 'translate(-50%, 6px)' }}
-              w={{ base: 'auto', md: '260px' }}
-              flex={{ base: 1, md: 'initial' }}
-              p="14px 16px"
-              bg={popBg}
-              border="1px solid"
-              borderColor={strongBorder}
-              borderRadius="12px"
-              boxShadow={popShadow}
-              opacity={{ base: 1, md: 0 }}
-              pointerEvents={{ base: 'auto', md: 'none' }}
-              transition="opacity 220ms ease, transform 220ms ease"
-              zIndex={5}
-              _groupHover={{
-                opacity: 1,
-                transform: { md: 'translate(-50%, 0)' }
-              }}
-              _groupFocus={{
-                opacity: 1,
-                transform: { md: 'translate(-50%, 0)' }
-              }}
-              _after={{
-                content: { base: 'none', md: '""' },
-                position: 'absolute',
-                top: '100%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                border: '6px solid transparent',
-                borderTopColor: strongBorder
-              }}
-            >
-              <Text
-                fontFamily="heading"
-                color={headingColor}
-                fontSize="0.98rem"
-                fontWeight={500}
-                mb="2px"
-              >
-                {item.school}
-              </Text>
-              <Text color={degreeColor} fontSize="0.82rem" mb="8px">
-                {item.degree}
-              </Text>
-              <HStack
-                fontFamily="mono"
-                fontSize="0.74rem"
-                color={muted}
-                mb="8px"
-                spacing={2}
-              >
-                <Kbd>period</Kbd>
-                <Text>{item.date}</Text>
-              </HStack>
-              <Text color={muted} fontSize="0.82rem" lineHeight={1.5} m={0}>
-                {item.note}
-              </Text>
-            </Box>
-          </Flex>
-        ))}
-      </Flex>
-      <Text
-        textAlign="center"
-        fontFamily="mono"
-        fontSize="0.74rem"
-        color={muted}
-        mt={2}
-      >
-        hover or focus a node for details
-      </Text>
-    </Box>
-  )
-}
+          ))}
+        </Box>
+      </Box>
+    ))}
+  </Box>
+)
+
+const EducationLine = ({ items }) => (
+  <Box className={styles.educationList}>
+    {[...items].reverse().map(item => (
+      <Box className={styles.educationRow} key={item.school}>
+        <Box className={styles.schoolMark} aria-hidden="true">
+          {item.initials}
+        </Box>
+        <Box>
+          <Text className={styles.mutedMeta} mb={2}>
+            {item.date}
+          </Text>
+          <Heading as="h3" fontSize="1.1rem" fontWeight={500} mb={1}>
+            {item.school}
+          </Heading>
+          <Text fontSize="sm" lineHeight={1.6}>
+            {item.degree}
+          </Text>
+          <Text
+            className={styles.secondaryText}
+            fontSize="sm"
+            lineHeight={1.7}
+            mt={2}
+          >
+            {item.note}
+          </Text>
+        </Box>
+      </Box>
+    ))}
+  </Box>
+)
 
 const Home = () => {
   const [showOldNews, setShowOldNews] = useState(false)
-  const muted = useColorModeValue('ink.500', 'ink.400')
-  const bodyColor = useColorModeValue('ink.700', 'ink.200')
   const accent = useColorModeValue('brand.600', 'brand.300')
-  const softAccent = useColorModeValue(
-    'rgba(59,91,254,0.10)',
-    'rgba(94,234,212,0.14)'
-  )
 
   return (
     <Layout>
@@ -1080,83 +685,33 @@ const Home = () => {
         }}
       />
 
-      <Container maxW="1040px" px={0}>
-        <Section id="about" delay={0} my={0} mt="24px">
-          <Box position="relative" pt={{ base: '24px', md: '40px' }} pb="24px">
-            <Flex
-              gap={3}
-              flexWrap="wrap"
-              fontFamily="mono"
-              fontSize="xs"
-              color={muted}
-              mb="28px"
+      <Container maxW="1120px" px={0} className={styles.folio}>
+        <Section id="about" delay={0} my={0} className={styles.hero}>
+          <Box className={styles.heroMain}>
+            <Text className={styles.heroEyebrow}>Embodied AI / VLA / VLN</Text>
+            <Heading
+              as="h1"
+              fontSize={{ base: '2.5rem', md: '3.25rem' }}
+              fontWeight={500}
+              letterSpacing="-0.055em"
+              lineHeight={1.12}
             >
-              <HStack spacing={2}>
-                <Kbd>location</Kbd>
-                <IoLocationSharp />
-                <Text>Seoul, South Korea</Text>
-              </HStack>
-              <HStack spacing={2}>
-                <Kbd>status</Kbd>
-                <StatusDot pulse />
-                <Text>M.S. Student</Text>
-              </HStack>
-            </Flex>
-
-            <Box
-              position={{ base: 'static', md: 'absolute' }}
-              top={{ md: '32px' }}
-              right={0}
-              w={{ base: '112px', md: '156px', lg: '172px' }}
-              h={{ base: '112px', md: '156px', lg: '172px' }}
-              mb={{ base: 5, md: 0 }}
-            >
-              <ChakraImage
-                src="/images/chungwoo.webp"
-                alt="Lee Chung-woo"
-                w="100%"
-                h="100%"
-                objectFit="cover"
-                borderRadius="full"
-                border="1px solid"
-                borderColor={useColorModeValue(
-                  'blackAlpha.200',
-                  'whiteAlpha.300'
-                )}
-              />
-            </Box>
-
-            <Heading as="h1" variant="page-title" maxW="760px">
-              Lee Chung-woo
+              Chungwoo Lee
             </Heading>
-            <Text
-              mt={4}
-              fontFamily="mono"
-              fontSize={{ base: 'sm', md: 'md' }}
-              letterSpacing="0.02em"
-              color={accent}
-            >
+            <Text mt={4} color={accent} fontSize="sm" lineHeight={1.7}>
               M.S. Student · Interdisciplinary Program in Artificial
               Intelligence
             </Text>
             <Text
-              mt={2}
+              mt={4}
               fontFamily="heading"
-              fontSize={{ base: 'xl', md: '2xl' }}
-              color={bodyColor}
+              fontSize={{ base: 'lg', md: '1.45rem' }}
+              lineHeight={1.5}
+              maxW="640px"
             >
               Better spatial perception for better embodied action.
             </Text>
-            <HStack mt={4} color={muted} fontFamily="mono" fontSize="sm">
-              <Text as="span" role="img" aria-label="robot" fontSize="1rem">
-                🤖
-              </Text>
-              <Link href="https://gsai.snu.ac.kr/" isExternal color="inherit">
-                Seoul National University · GSAI
-              </Link>
-            </HStack>
-
-            <Box maxW="720px" mt={8} color={bodyColor}>
+            <Box className={styles.biography}>
               <Paragraph>
                 I am a Master’s student in the{' '}
                 <Link href="https://gsai.snu.ac.kr/" isExternal>
@@ -1181,75 +736,88 @@ const Home = () => {
                 environments.
               </Paragraph>
             </Box>
-
-            <ChipRow label="research interests" items={interests} />
-
-            <Stack direction={{ base: 'column', sm: 'row' }} spacing={3} mt={8}>
-              <Button
-                as={Link}
-                href="mailto:canwooj@gmail.com"
-                leftIcon={<IoMailUnread />}
-              >
-                get in touch
-              </Button>
-              <Button
-                as={Link}
-                href="https://github.com/lcwoo"
-                isExternal
-                variant="outline"
-                leftIcon={<IoLogoGithub />}
-              >
-                github
-              </Button>
-              <Button
-                as={Link}
-                href="https://www.linkedin.com/in/chungwoo-lee"
-                isExternal
-                variant="outline"
-                leftIcon={<IoLogoLinkedin />}
-              >
-                linkedin
-              </Button>
-              <Button
-                as={Link}
-                href="https://scholar.google.com/citations?user=vZd6tSEAAAAJ"
-                isExternal
-                variant="outline"
-                leftIcon={<IoSchool />}
-              >
-                scholar
-              </Button>
-            </Stack>
+            <Flex className={styles.heroLinks} gap={3} flexWrap="wrap">
+              {contactLinks.map(item => {
+                const Icon = item.icon
+                return (
+                  <Button
+                    key={item.href}
+                    as={Link}
+                    href={item.href}
+                    isExternal={item.external}
+                    variant={item.shortLabel === 'email' ? 'solid' : 'outline'}
+                    leftIcon={<Icon />}
+                  >
+                    {
+                      {
+                        email: 'Get in touch',
+                        github: 'GitHub',
+                        linkedin: 'LinkedIn',
+                        scholar: 'Scholar'
+                      }[item.shortLabel]
+                    }
+                  </Button>
+                )
+              })}
+            </Flex>
+          </Box>
+          <Box as="aside" className={styles.profileAside}>
+            <ChakraImage
+              src="/images/chungwoo.webp"
+              alt="Chungwoo Lee"
+              w="144px"
+              h="144px"
+              borderRadius="full"
+              objectFit="cover"
+              mb={6}
+            />
+            <Text fontWeight={500} fontSize="sm">
+              Seoul National University
+            </Text>
+            <Text className={styles.secondaryText} fontSize="sm" mt={1}>
+              Graduate School of AI
+            </Text>
+            <Text className={styles.mutedMeta} mt={4}>
+              Seoul, South Korea
+            </Text>
+            <Box className={styles.interestList}>
+              <Text className={styles.mutedMeta} mb={3}>
+                <Text as="span" role="img" aria-label="Robot" mr={2}>
+                  🤖
+                </Text>
+                Research interests
+              </Text>
+              {interests.map(item => (
+                <Text key={item} fontSize="sm" py={2}>
+                  {item}
+                </Text>
+              ))}
+            </Box>
           </Box>
         </Section>
 
-        <Section id="publications" delay={0.06}>
+        <Section id="publications" className={styles.editorialSection}>
           <SectionHead index="01" title="Publications" />
-          <Stack spacing="10px">
+          <Box minW={0}>
             {getPublications().map(publication => (
               <PublicationCard
                 key={publication.id}
                 publication={publication}
+                featured={publication.venues.some(venue => venue.primary)}
               />
             ))}
-          </Stack>
-          <Text fontFamily="mono" fontSize="0.72rem" color={muted} mt="12px">
-            * equal contribution · † corresponding author
-          </Text>
-          <Text
-            fontFamily="mono"
-            fontSize="0.76rem"
-            color={muted}
-            mt="18px"
-            textAlign="center"
-          >
-            <Link as={NextLink} href="/publications">
-              view publication archive
-            </Link>
-          </Text>
+            <Flex justify="space-between" flexWrap="wrap" gap={4} mt={6}>
+              <Text className={styles.mutedMeta}>
+                * Equal contribution · † Corresponding author
+              </Text>
+              <Link as={NextLink} href="/publications" fontSize="sm">
+                Publication archive ↗
+              </Link>
+            </Flex>
+          </Box>
         </Section>
 
-        <Section id="news" delay={0.1}>
+        <Section id="news" className={styles.editorialSection}>
           <SectionHead
             index="02"
             title="News"
@@ -1261,96 +829,111 @@ const Home = () => {
                   showOldNews ? <ChevronUpIcon /> : <ChevronDownIcon />
                 }
                 onClick={() => setShowOldNews(!showOldNews)}
+                aria-expanded={showOldNews}
               >
-                old news
+                Earlier news
               </Button>
             }
           />
-          <VStack align="stretch" spacing={4}>
+          <Box minW={0}>
             {newsGroups.map(group => (
               <NewsYearGroup key={group.year} group={group} />
             ))}
             <Collapse in={showOldNews} animateOpacity>
-              <VStack align="stretch" spacing={4}>
-                {oldNewsGroups.map(group => (
-                  <NewsYearGroup key={group.year} group={group} />
-                ))}
-              </VStack>
+              {oldNewsGroups.map(group => (
+                <NewsYearGroup key={group.year} group={group} />
+              ))}
             </Collapse>
-          </VStack>
+          </Box>
         </Section>
 
-        <Section id="ongoing" delay={0.14}>
-          <SectionHead
-            index="03"
-            title="Ongoing Research"
-            extra={<RectTag>3DGS · VLA · Spatial Interaction</RectTag>}
-          />
-          <Text color={bodyColor} maxW="42rem" lineHeight={1.7} mb="28px">
-            Exploring persistent 3D interaction representations for
-            Vision-Language-Action policies that remain grounded across
-            viewpoint changes, articulation, and occlusion.
-          </Text>
-          <RectTag tone="subtle" mb="8px">
-            Interactive Iron Man 3DGS viewer
-          </RectTag>
-          <Text color={muted} fontSize="sm" lineHeight={1.65} maxW="42rem" mb="14px">
-            Interactive 3DGS viewer using a sample scene. This viewer is a
-            visualization sandbox, not a research result.
-          </Text>
-          <LazyScene />
+        <Section
+          id="ongoing"
+          className={`${styles.editorialSection} ${styles.ongoingSection}`}
+        >
+          <SectionHead index="03" title="Ongoing research" />
+          <Box minW={0}>
+            <Text fontSize="md" lineHeight={1.7} maxW="680px" mb={4}>
+              Exploring persistent 3D interaction representations for
+              Vision-Language-Action policies that remain grounded across
+              viewpoint changes, articulation, and occlusion.
+            </Text>
+            <Box className={styles.experimentPanel}>
+              <Box className={styles.experimentCaption}>
+                <Heading as="h3" fontSize="lg" fontWeight={500} mb={2}>
+                  Interactive 3DGS viewer
+                </Heading>
+                <Text
+                  className={styles.secondaryText}
+                  fontSize="xs"
+                  lineHeight={1.7}
+                >
+                  Interactive Iron Man sample scene for visualization, not a
+                  research result.
+                </Text>
+              </Box>
+              <Box minW={0}>
+                <LazyScene />
+              </Box>
+            </Box>
+          </Box>
         </Section>
 
-        <Section id="experience" delay={0.18}>
+        <Section id="experience" className={styles.editorialSection}>
           <SectionHead index="04" title="Experience" />
           <Timeline items={experience} />
         </Section>
 
-        <Section id="education" delay={0.22}>
+        <Section id="education" className={styles.editorialSection}>
           <SectionHead index="05" title="Education" />
           <EducationLine items={education} />
         </Section>
 
-        <Section id="contact" delay={0.26}>
-          <SectionHead index="06" title="Contact" />
-          <Card
-            p={{ base: 6, md: 8 }}
-            display="grid"
-            gridTemplateColumns={{ base: '1fr', md: '1.15fr 1fr' }}
-            gap={7}
-            alignItems="center"
-          >
-            <Box>
-              <Heading
-                as="h3"
-                fontSize={{ base: '2xl', md: '3xl' }}
-                fontWeight={500}
-              >
-                Let&apos;s discuss spatial intelligence for embodied agents.
-              </Heading>
-              <Text mt={3} color={bodyColor}>
-              Open to research conversations on VLA, VLN, robotics, and perception systems for dynamic environments.
-              </Text>
-            </Box>
-            <VStack align="stretch" spacing={3}>
-              {contactLinks.map(item => {
-                const Icon = item.icon
-                return (
-                  <Button
-                    key={item.href}
-                    as={Link}
-                    href={item.href}
-                    isExternal={item.external}
-                    variant={item.shortLabel === 'email' ? 'solid' : 'outline'}
-                    leftIcon={<Icon />}
-                    justifyContent="flex-start"
-                  >
-                    {item.label}
-                  </Button>
-                )
-              })}
-            </VStack>
-          </Card>
+        <Section id="contact" className={styles.contactSection}>
+          <Box>
+            <Text className={styles.sectionIndex} mb={5}>
+              06 / Contact
+            </Text>
+            <Heading
+              as="h2"
+              fontSize={{ base: '1.8rem', md: '2.5rem' }}
+              fontWeight={500}
+              letterSpacing="-0.045em"
+              lineHeight={1.25}
+              maxW="600px"
+            >
+              Let’s discuss spatial intelligence for embodied agents.
+            </Heading>
+            <Text
+              className={styles.secondaryText}
+              fontSize="sm"
+              lineHeight={1.8}
+              mt={5}
+              maxW="520px"
+            >
+              Open to research conversations on VLA, VLN, robotics, and
+              perception systems for dynamic environments.
+            </Text>
+          </Box>
+          <Box className={styles.contactLinks}>
+            {contactLinks.map(item => {
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  isExternal={item.external}
+                  className={styles.contactLink}
+                >
+                  <Flex gap={3} align="center">
+                    <Icon />
+                    <Text>{item.label}</Text>
+                  </Flex>
+                  <Text aria-hidden="true">↗</Text>
+                </Link>
+              )
+            })}
+          </Box>
         </Section>
 
         {/* Visitor map is hidden from the page; the MapMyVisitors script still

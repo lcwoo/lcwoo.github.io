@@ -1,4 +1,4 @@
-import { Box, Spinner, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 
 export const SceneSpinner = () => (
   <Spinner
@@ -7,94 +7,54 @@ export const SceneSpinner = () => (
     zIndex={2}
     left="50%"
     top="50%"
-    ml="-20px"
-    mt="-20px"
+    transform="translate(-50%, -50%)"
     color="brand.300"
   />
 )
 
-export const SceneContainer = ({ children }) => {
-  const borderColor = useColorModeValue(
-    'rgba(15,18,30,0.10)',
-    'rgba(255,255,255,0.08)'
-  )
-  const hoverBorder = useColorModeValue(
-    'rgba(15,18,30,0.22)',
-    'rgba(255,255,255,0.18)'
-  )
-  const surface = useColorModeValue(
-    'rgba(15,18,30,0.035)',
-    'rgba(255,255,255,0.035)'
-  )
-  const bgBase = useColorModeValue('#F2F3F7', '#111319')
-  const pattern = useColorModeValue(
-    'repeating-linear-gradient(45deg, rgba(15,18,30,0.035) 0 2px, transparent 2px 6px)',
-    'repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 6px)'
-  )
-  const hintBg = useColorModeValue(
-    'rgba(250,250,252,0.65)',
-    'rgba(11,12,16,0.65)'
-  )
-  const muted = useColorModeValue('ink.500', 'ink.400')
-
+export const SceneContainer = ({ children, controls }) => {
+  const borderColor = useColorModeValue('blackAlpha.100', 'whiteAlpha.100')
+  const background = useColorModeValue('#edf0f3', '#0e1116')
+  const muted = useColorModeValue('ink.600', 'ink.300')
   return (
-    <Box
-      id="splat-card"
-      bg={surface}
-      border="1px solid"
-      borderColor={borderColor}
-      borderRadius="18px"
-      overflow="hidden"
-      transition="border-color 220ms ease"
-      _hover={{ borderColor: hoverBorder }}
-    >
+    <Box id="splat-card" w="100%" minW={0} overflow="hidden">
       <Box
         position="relative"
-        bg={`${pattern}, ${bgBase}`}
-        sx={{
-          aspectRatio: { base: '4 / 3', md: '16 / 9' },
-          minHeight: { base: '280px', md: '360px' }
-        }}
+        w="100%"
+        minW={0}
+        bg={background}
+        h={{ base: '240px', md: '320px' }}
         overflow="hidden"
       >
-        <Box position="absolute" inset={0} w="100%" h="100%">
-          {/* Mount node + overlays; GaussianSplats3D must own the mount div alone */}
+        <Box position="absolute" inset={0} w="100%" h="100%" minW={0}>
           {children}
         </Box>
-        <Box
-          position="absolute"
-          bottom="14px"
-          left="50%"
-          transform="translateX(-50%)"
-          px="12px"
-          py="6px"
-          bg={hintBg}
-          border="1px solid"
-          borderColor={hoverBorder}
-          borderRadius="full"
-          backdropFilter="blur(8px)"
-          fontFamily="mono"
-          fontSize="0.7rem"
-          letterSpacing="0.1em"
-          textTransform="uppercase"
-          color={muted}
-          zIndex={3}
-          pointerEvents="none"
-          opacity={0.85}
-        >
-          drag · zoom · explore
-        </Box>
       </Box>
+      <Flex
+        borderTop="1px solid"
+        borderColor={borderColor}
+        px={{ base: 4, md: 6 }}
+        py={3}
+        align="center"
+        justify="space-between"
+        gap={3}
+        flexWrap="wrap"
+      >
+        <Text color={muted} fontSize="xs" lineHeight={1.7}>
+          Drag to rotate · Pinch or scroll to zoom
+        </Text>
+        {controls && (
+          <Box w={{ base: '100%', md: '320px' }} maxW="100%">
+            {controls}
+          </Box>
+        )}
+      </Flex>
     </Box>
   )
 }
-
-const Loader = () => {
-  return (
-    <SceneContainer>
-      <SceneSpinner />
-    </SceneContainer>
-  )
-}
-
+const Loader = () => (
+  <SceneContainer>
+    <SceneSpinner />
+  </SceneContainer>
+)
 export default Loader

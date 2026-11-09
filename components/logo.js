@@ -17,15 +17,9 @@ const Logo = () => {
         whiteSpace="nowrap"
         color={nameColor}
       >
-        <Box
-          w="7px"
-          h="7px"
-          borderRadius="full"
-          bg={dotColor}
-          boxShadow="0 0 8px currentColor"
-        />
-        <Text as="span" color={nameColor} fontWeight={700}>
-          Lee Chung-woo
+        <Box w="7px" h="7px" borderRadius="full" bg={dotColor} />
+        <Text as="span" color={nameColor} fontWeight={500}>
+          Chungwoo Lee
         </Text>
         <Text as="span" color={muted} display={{ base: 'none', md: 'inline' }}>
           /

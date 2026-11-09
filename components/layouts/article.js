@@ -1,22 +1,23 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Head from 'next/head'
 import { GridItemStyle } from '../grid-item'
 
 const variants = {
-  hidden: { opacity: 0, x: 0, y: 20 },
+  hidden: { opacity: 0, x: 0, y: 8 },
   enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: -0, y: 20 }
+  exit: { opacity: 0, x: -0, y: 8 }
 }
 
 const Layout = ({ children, title }) => {
-  const t = `${title} - Lee Chung-woo`
+  const reducedMotion = useReducedMotion()
+  const t = `${title} - Chungwoo Lee`
   return (
     <motion.article
-      initial="hidden"
+      initial={reducedMotion ? false : 'hidden'}
       animate="enter"
       exit="exit"
       variants={variants}
-      transition={{ duration: 0.4, type: 'easeInOut' }}
+      transition={{ duration: reducedMotion ? 0 : 0.3, ease: 'easeOut' }}
       style={{ position: 'relative' }}
     >
       <>

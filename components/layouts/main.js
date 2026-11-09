@@ -5,17 +5,9 @@ import Footer from '../footer'
 import { Analytics } from '@vercel/analytics/react'
 
 const BackgroundShell = () => {
-  const accent = useColorModeValue(
-    'rgba(59, 91, 254, 0.10)',
-    'rgba(94, 234, 212, 0.14)'
-  )
-  const accentTwo = useColorModeValue(
-    'rgba(59, 91, 254, 0.10)',
-    'rgba(94, 234, 212, 0.14)'
-  )
-  const grid = useColorModeValue(
-    'rgba(15,18,32,0.055)',
-    'rgba(255,255,255,0.035)'
+  const fineGrid = useColorModeValue(
+    'rgba(15,18,32,0.024)',
+    'rgba(255,255,255,0.014)'
   )
   const grainOpacity = useColorModeValue(0.05, 0.1)
 
@@ -27,42 +19,18 @@ const BackgroundShell = () => {
       zIndex={-1}
       overflow="hidden"
       bg={useColorModeValue('#FAFAFC', '#0B0C10')}
-      _before={{
-        content: '""',
-        position: 'absolute',
-        top: '-200px',
-        right: '-180px',
-        w: '560px',
-        h: '560px',
-        borderRadius: 'full',
-        bg: `radial-gradient(circle, ${accent} 0%, transparent 60%)`,
-        filter: 'blur(40px)',
-        opacity: 0.9
-      }}
-      _after={{
-        content: '""',
-        position: 'absolute',
-        bottom: '-240px',
-        left: '-160px',
-        w: '520px',
-        h: '520px',
-        borderRadius: 'full',
-        bg: `radial-gradient(circle, ${accentTwo} 0%, transparent 65%)`,
-        filter: 'blur(50px)',
-        opacity: 0.6
-      }}
     >
       <Box
         position="absolute"
         inset={0}
-        opacity={useColorModeValue(0.8, 1)}
-        bgImage={`linear-gradient(${grid} 1px, transparent 1px), linear-gradient(90deg, ${grid} 1px, transparent 1px)`}
+        opacity={0.6}
+        bgImage={`linear-gradient(${fineGrid} 1px, transparent 1px), linear-gradient(90deg, ${fineGrid} 1px, transparent 1px)`}
         bgSize="64px 64px"
         sx={{
           maskImage:
-            'radial-gradient(ellipse at 50% 25%, black 30%, transparent 80%)',
+            'linear-gradient(90deg, black 0%, transparent 22%, transparent 78%, black 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse at 50% 25%, black 30%, transparent 80%)'
+            'linear-gradient(90deg, black 0%, transparent 22%, transparent 78%, black 100%)'
         }}
       />
       <Box
@@ -84,13 +52,13 @@ const Main = ({ children, router }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="Lee Chung-woo, M.S. student in the Interdisciplinary Program in Artificial Intelligence at Seoul National University. Better spatial perception for better embodied action."
+          content="Chungwoo Lee, M.S. student in the Interdisciplinary Program in Artificial Intelligence at Seoul National University. Better spatial perception for better embodied action."
         />
-        <meta name="author" content="Lee Chung-woo" />
+        <meta name="author" content="Chungwoo Lee" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <meta property="og:site_name" content="Lee Chung-woo" />
-        <meta property="og:title" content="Lee Chung-woo" key="og:title" />
+        <meta property="og:site_name" content="Chungwoo Lee" />
+        <meta property="og:title" content="Chungwoo Lee" key="og:title" />
         <meta
           property="og:description"
           content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. Better spatial perception for better embodied action."
@@ -105,12 +73,12 @@ const Main = ({ children, router }) => {
         <meta property="og:image:height" content="630" />
         <meta
           property="og:image:alt"
-          content="Lee Chung-woo · M.S. Student, Seoul National University"
+          content="Chungwoo Lee · M.S. Student, Seoul National University"
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Lee Chung-woo"
+          content="Chungwoo Lee"
           key="twitter:title"
         />
         <meta
@@ -121,13 +89,19 @@ const Main = ({ children, router }) => {
           name="twitter:image"
           content="https://lcwoo.github.io/og-image.png"
         />
-        <title>Lee Chung-woo · Research Notebook</title>
+        <title>Chungwoo Lee · Research Notebook</title>
       </Head>
 
       <BackgroundShell />
       <NavBar path={router.asPath} />
 
-      <Container id="top" maxW="1040px" px="28px" pt="96px" pb="80px">
+      <Container
+        id="top"
+        maxW="1168px"
+        px={{ base: 6, md: 6 }}
+        pt="80px"
+        pb="64px"
+      >
         {children}
         <Analytics />
       </Container>

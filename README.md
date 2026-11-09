@@ -1,6 +1,6 @@
-# Lee Chung-woo Homepage
+# Chungwoo Lee Homepage
 
-Personal research homepage for Lee Chung-woo, built with Next.js, Chakra UI,
+Personal research homepage for Chungwoo Lee, built with Next.js, Chakra UI,
 Framer Motion, and Three.js.
 
 ## Overview
