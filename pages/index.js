@@ -713,7 +713,7 @@ const Home = () => {
             </Text>
             <Box className={styles.biography}>
               <Paragraph>
-                I am a Master’s student in the{' '}
+                I am a master’s student in the{' '}
                 <Link href="https://gsai.snu.ac.kr/" isExternal>
                   Interdisciplinary Program in Artificial Intelligence at Seoul
                   National University
@@ -722,17 +722,17 @@ const Home = () => {
                 <Link href="https://bi.snu.ac.kr/" isExternal>
                   Prof. Byoung-Tak Zhang
                 </Link>
-                . I received my B.S. in{' '}
+                . I received my bachelor’s degree in{' '}
                 <Link href="https://ae.hanyang.ac.kr/%ED%99%88" isExternal>
                   Automotive Engineering from Hanyang University
                 </Link>
                 .
               </Paragraph>
               <Paragraph>
-                My research interests lie in Vision-Language-Action (VLA) and
-                Vision-and-Language Navigation (VLN), with a focus on developing
-                spatial perception capabilities for intelligent agents that can
-                effectively perceive and interact with dynamic real-world
+                My research focuses on Vision-Language-Action (VLA) models and
+                Vision-and-Language Navigation (VLN). I am particularly
+                interested in how spatial perception and understanding can
+                enable agents to act reliably in dynamic, real-world
                 environments.
               </Paragraph>
             </Box>
