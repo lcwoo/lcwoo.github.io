@@ -46,7 +46,7 @@ const Scene = dynamic(() => import('../components/scene'), {
   )
 })
 
-// The 3DGS viewer downloads ~11 MB, so it starts only when needed:
+// The 3DGS viewer downloads ~4 MB, so it starts only when needed:
 // on desktop when it scrolls near the viewport, on phones when tapped.
 const LazyScene = () => {
   const [active, setActive] = useState(false)
@@ -109,7 +109,7 @@ const LazyScene = () => {
               onClick={() => setActive(true)}
               zIndex={4}
             >
-              Load interactive 3D · 11 MB
+              Load interactive 3D · 4 MB
             </Button>
           </Flex>
         </Flex>
@@ -213,8 +213,8 @@ const experience = [
     org: 'Interdisciplinary Program in Artificial Intelligence at Seoul National University',
     url: 'https://gsai.snu.ac.kr/',
     notes: [
-      'Researching Vision-Language-Action and Vision-and-Language Navigation.',
-      'Developing spatial perception capabilities for intelligent agents.'
+      'Researching 3D-grounded Vision-Language-Action (VLA) and visuomotor policies for robot manipulation, along with Vision-and-Language Navigation (VLN).',
+      'Running robot experiments and teleoperated data collection on Mobile ALOHA, AI Worker, UR5e with GELLO, TurtleBot3, and Unitree Go2.'
     ]
   },
   {
@@ -688,78 +688,114 @@ const Home = () => {
       <Container maxW="1120px" px={0} className={styles.folio}>
         <Section id="about" delay={0} my={0} className={styles.hero}>
           <Box className={styles.heroMain}>
-            <Text className={styles.heroEyebrow}>Embodied AI / VLA / VLN</Text>
-            <Heading
-              as="h1"
-              fontSize={{ base: '2.5rem', md: '3.25rem' }}
-              fontWeight={500}
-              letterSpacing="-0.055em"
-              lineHeight={1.12}
-            >
-              Chungwoo Lee
-            </Heading>
-            <Text mt={4} color={accent} fontSize="sm" lineHeight={1.7}>
-              M.S. Student · Interdisciplinary Program in Artificial
-              Intelligence
-            </Text>
-            <Text
-              mt={4}
-              fontFamily="heading"
-              fontSize={{ base: 'lg', md: '1.45rem' }}
-              lineHeight={1.5}
-              maxW="640px"
-            >
-              Better spatial perception for better embodied action.
-            </Text>
-            <Box className={styles.biography}>
-              <Paragraph>
-                I am a master’s student in the{' '}
-                <Link href="https://gsai.snu.ac.kr/" isExternal>
-                  Interdisciplinary Program in Artificial Intelligence at Seoul
-                  National University
-                </Link>
-                , advised by{' '}
-                <Link href="https://bi.snu.ac.kr/" isExternal>
-                  Prof. Byoung-Tak Zhang
-                </Link>
-                . I received my bachelor’s degree in{' '}
-                <Link href="https://ae.hanyang.ac.kr/%ED%99%88" isExternal>
-                  Automotive Engineering from Hanyang University
-                </Link>
-                .
-              </Paragraph>
-              <Paragraph>
-                My research focuses on Vision-Language-Action (VLA) models and
-                Vision-and-Language Navigation (VLN). I am particularly
-                interested in how spatial perception and understanding can
-                enable agents to act reliably in dynamic, real-world
-                environments.
-              </Paragraph>
+            <Box className={styles.heroIntro}>
+              <Text className={styles.heroEyebrow}>
+                3D-Grounded Robot Learning
+              </Text>
+              <Heading
+                as="h1"
+                fontSize={{ base: '2.5rem', md: '3.25rem' }}
+                fontWeight={500}
+                letterSpacing="-0.055em"
+                lineHeight={1.12}
+              >
+                Chungwoo Lee
+              </Heading>
+              <Text mt={4} color={accent} fontSize="sm" lineHeight={1.7}>
+                M.S. Student · Interdisciplinary Program in Artificial
+                Intelligence
+              </Text>
+              <Text
+                mt={4}
+                fontFamily="heading"
+                fontSize={{ base: 'lg', md: '1.45rem' }}
+                lineHeight={1.5}
+                maxW="640px"
+              >
+                Better spatial perception for better embodied action.
+              </Text>
             </Box>
-            <Flex className={styles.heroLinks} gap={3} flexWrap="wrap">
-              {contactLinks.map(item => {
-                const Icon = item.icon
-                return (
-                  <Button
-                    key={item.href}
-                    as={Link}
-                    href={item.href}
-                    isExternal={item.external}
-                    variant={item.shortLabel === 'email' ? 'solid' : 'outline'}
-                    leftIcon={<Icon />}
-                  >
-                    {
-                      {
-                        email: 'Get in touch',
-                        github: 'GitHub',
-                        linkedin: 'LinkedIn',
-                        scholar: 'Scholar'
-                      }[item.shortLabel]
-                    }
-                  </Button>
-                )
-              })}
-            </Flex>
+            <Box className={styles.heroDetails}>
+              <Box className={styles.biography}>
+                <Paragraph>
+                  I am a master’s student in the{' '}
+                  <Link href="https://gsai.snu.ac.kr/" isExternal>
+                    Interdisciplinary Program in Artificial Intelligence at
+                    Seoul National University
+                  </Link>
+                  , advised by{' '}
+                  <Link href="https://bi.snu.ac.kr/" isExternal>
+                    Prof. Byoung-Tak Zhang
+                  </Link>
+                  . I received my bachelor’s degree in{' '}
+                  <Link href="https://ae.hanyang.ac.kr/%ED%99%88" isExternal>
+                    Automotive Engineering from Hanyang University
+                  </Link>
+                  .
+                </Paragraph>
+                <Paragraph>
+                  My research is in robot learning, with a focus on
+                  manipulation. I study how Vision-Language-Action (VLA) and
+                  visuomotor policies can use the 3D structure of a scene, such
+                  as point clouds and object geometry, to act reliably across
+                  new viewpoints, objects, and environments. I have also worked
+                  on Vision-and-Language Navigation (VLN) with real robots.
+                </Paragraph>
+              </Box>
+              <Flex
+                className={styles.heroLinks}
+                direction={{ base: 'column', md: 'row' }}
+                align="flex-start"
+                gap={3}
+              >
+                {contactLinks
+                  .filter(item => item.shortLabel === 'email')
+                  .map(item => {
+                    const Icon = item.icon
+                    return (
+                      <Button
+                        key={item.href}
+                        as={Link}
+                        href={item.href}
+                        isExternal={item.external}
+                        variant="solid"
+                        leftIcon={<Icon />}
+                      >
+                        Get in touch
+                      </Button>
+                    )
+                  })}
+                <Flex
+                  className={styles.heroSocialLinks}
+                  gap={3}
+                  flexWrap="nowrap"
+                >
+                  {contactLinks
+                    .filter(item => item.shortLabel !== 'email')
+                    .map(item => {
+                      const Icon = item.icon
+                      return (
+                        <Button
+                          key={item.href}
+                          as={Link}
+                          href={item.href}
+                          isExternal
+                          variant="outline"
+                          leftIcon={<Icon />}
+                        >
+                          {
+                            {
+                              github: 'GitHub',
+                              linkedin: 'LinkedIn',
+                              scholar: 'Scholar'
+                            }[item.shortLabel]
+                          }
+                        </Button>
+                      )
+                    })}
+                </Flex>
+              </Flex>
+            </Box>
           </Box>
           <Box as="aside" className={styles.profileAside}>
             <ChakraImage
@@ -902,7 +938,7 @@ const Home = () => {
               lineHeight={1.25}
               maxW="600px"
             >
-              Let’s discuss spatial intelligence for embodied agents.
+              Let’s talk about 3D-grounded robot learning.
             </Heading>
             <Text
               className={styles.secondaryText}
@@ -911,8 +947,8 @@ const Home = () => {
               mt={5}
               maxW="520px"
             >
-              Open to research conversations on VLA, VLN, robotics, and
-              perception systems for dynamic environments.
+              Open to research conversations on VLA policies, robot
+              manipulation, 3D scene representations, and navigation.
             </Text>
           </Box>
           <Box className={styles.contactLinks}>

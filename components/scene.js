@@ -11,7 +11,8 @@ import {
   computeTorsoPivot
 } from '../lib/splat-orbit'
 
-const SPLAT_PATH = '/iron_man_best.ksplat'
+// SH degree 0 only (the viewer renders at degree 0), ~3.8 MB.
+const SPLAT_PATH = '/iron_man.ksplat'
 
 /** Serialize dispose so Strict Mode remount does not stack viewers on one node. */
 let disposeChain = Promise.resolve()
@@ -33,6 +34,7 @@ const Scene = () => {
   const viewerRef = useRef(null)
   const paramsRef = useRef(DEFAULT_SPLAT_PARAMS)
   const [loading, setLoading] = useState(true)
+  const [progress, setProgress] = useState(null)
   const [error, setError] = useState(false)
   const [ready, setReady] = useState(false)
   const [params, setParams] = useState(DEFAULT_SPLAT_PARAMS)
@@ -85,7 +87,16 @@ const Scene = () => {
       try {
         await viewer.addSplatScene(SPLAT_PATH, {
           progressiveLoad: false,
-          showLoadingUI: false
+          showLoadingUI: false,
+          onProgress: (percent, _label, status) => {
+            if (cancelled) return
+            // The library does not export LoaderStatus; 0 = downloading.
+            setProgress(
+              status === 0
+                ? `Loading ${Math.round(percent)}%`
+                : 'Preparing scene...'
+            )
+          }
         })
 
         if (cancelled) {
@@ -186,7 +197,7 @@ const Scene = () => {
           height: '100%'
         }}
       />
-      {loading && <SceneSpinner />}
+      {loading && <SceneSpinner label={progress} />}
       {error && (
         <div
           style={{

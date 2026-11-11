@@ -1,15 +1,23 @@
 import { Box, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 
-export const SceneSpinner = () => (
-  <Spinner
-    size="lg"
+export const SceneSpinner = ({ label }) => (
+  <Flex
     position="absolute"
     zIndex={2}
     left="50%"
     top="50%"
     transform="translate(-50%, -50%)"
-    color="brand.300"
-  />
+    direction="column"
+    align="center"
+    gap={3}
+  >
+    <Spinner size="lg" color="brand.300" />
+    {label && (
+      <Text fontFamily="mono" fontSize="xs" opacity={0.7}>
+        {label}
+      </Text>
+    )}
+  </Flex>
 )
 
 export const SceneContainer = ({ children, controls }) => {

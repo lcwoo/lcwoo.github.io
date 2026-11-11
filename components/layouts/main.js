@@ -52,7 +52,7 @@ const Main = ({ children, router }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="Chungwoo Lee, M.S. student in the Interdisciplinary Program in Artificial Intelligence at Seoul National University. Better spatial perception for better embodied action."
+          content="Chungwoo Lee, M.S. student in the Interdisciplinary Program in Artificial Intelligence at Seoul National University, working on 3D-grounded robot learning for VLA and visuomotor policies."
         />
         <meta name="author" content="Chungwoo Lee" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -61,7 +61,7 @@ const Main = ({ children, router }) => {
         <meta property="og:title" content="Chungwoo Lee" key="og:title" />
         <meta
           property="og:description"
-          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. Better spatial perception for better embodied action."
+          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. 3D-grounded robot learning for VLA and visuomotor policies."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://lcwoo.github.io/" />
@@ -83,7 +83,7 @@ const Main = ({ children, router }) => {
         />
         <meta
           name="twitter:description"
-          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. Better spatial perception for better embodied action."
+          content="M.S. Student · Interdisciplinary Program in AI, Seoul National University. 3D-grounded robot learning for VLA and visuomotor policies."
         />
         <meta
           name="twitter:image"
